@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  password String
+
+  canditado Applicant?
+  empresa Enterprise?
+
+  cellphone CellPhone?
+  socialmedia SocialMedia?
+}
+
+model CellPhone {
+  id Int @id @default(autoincrement())
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+}
+
+model SocialMedia {
+  id Int @id @default(autoincrement())
+  name String
+  reference String
+
+  user User @relation(fields: [user_id], references: [id])
+  user_id Int
+}
+
+//Candidato -> Applicant
+model Applicant {
+  id Int @id @default(autoincrement())
+  photo String
+  curriculum String
+
+  userID Int
+  user User @relation(fields: [userID], references: [id])
+}
+
+//Emrpesa -> Entreprise
+model Enterprise {
+  id Int @id @default(autoincrement())
+  cnpj String
+  segment String
+  cep Int
+
+  userID Int
+  user User @relation(fields: [userID], references: [id])
+}
+
+// Vagas -> Jobs
+model Jobs {
+  id        Int      @id @default(autoincrement())
+  title String
+  salary String
+  address String
+  enterprise String
+  description String
+
+  started_at DateTime @default(now())
+  ends_at DateTime
+
+}
+
+//Contato - Pagamento -> pesquisar mais
