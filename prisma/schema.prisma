@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -58,6 +58,8 @@ model Enterprise {
 
   userID Int
   user User @relation(fields: [userID], references: [id])
+
+  jobs Jobs?
 }
 
 // Vagas -> Jobs
@@ -66,8 +68,10 @@ model Jobs {
   title String
   salary String
   address String
-  enterprise String
   description String
+
+  enterprise Enterprise @relation(references: [id], fields: [enterprise_id])
+  enterprise_id Int
 
   started_at DateTime @default(now())
   ends_at DateTime
