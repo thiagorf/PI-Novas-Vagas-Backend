@@ -1,6 +1,5 @@
 import { GetAllJobsController } from "../../controllers/get-all-jobs-controller";
 
+const getAllJobsController = new GetAllJobsController()
 
-const getAlljobsController = new GetAllJobsController()
-
-export { getAlljobsController }
+export { getAllJobsController }

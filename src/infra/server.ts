@@ -5,6 +5,7 @@ import { compare, hash } from "bcrypt"
 import { sign } from "jsonwebtoken"
 import "dotenv/config"
 import { checkAuthMiddleware } from "./middlewares/check-auth-middleware";
+import { jobsRouter } from "../modules/jobs/infra/routes";
 
 const app = express();
 
@@ -12,99 +13,9 @@ const app = express();
 app.use(cors())
 app.use(json())
 
-app.get("/jobs", async function (request: Request, response: Response) {
 
-    const result = await prisma.jobs.findMany()
+app.use(jobsRouter)
 
-    return response.json(result)
-    
-})
-
-app.post("/jobs", checkAuthMiddleware, async function (request: Request, response: Response) {
-
-    const { 
-        title,
-        salary,
-        address,
-        description,
-        started_at,
-        ends_at
-    } = request.body
-
-
-
-    const vaga = await prisma.jobs.create({
-        data: {
-            title,
-            address,
-            description,
-            enterprise_id: request.user.id,
-            salary,
-            started_at,
-            ends_at
-        }
-    });
-
-    return response.json(vaga)
-
-})
-
-app.get("/jobs/:id", async function (request:Request, response: Response) {
-    let vagaId = request.params.id
-
-    let resposta = await prisma.jobs.findUnique({
-        where:{
-            id: Number(vagaId)
-        }
-    })
-
-    return response.json(resposta)
-})
-
-app.put("/jobs/:id", async function (request: Request, response: Response) {
-    let vagaId = request.params.id
-
-
-    const {
-        title,
-        address,
-        description,
-        enterprise,
-        salary,
-        started_at,
-        ends_at
-
-    } = request.body
-
-    const vaga = await prisma.jobs.update({
-        where: {
-            id: Number(vagaId)
-        },
-        data: {
-            title,
-            address,
-            description,
-            enterprise,
-            salary,
-            started_at,
-            ends_at
-        }
-    })
-
-    return response.json(vaga);
-
-})
-
-app.delete("/jobs/:id", async function (request:Request, response:Response) {
-    let vagaId = request.params.id
-
-    const vaga = await prisma.jobs.delete({
-        where:{
-            id: Number(vagaId)
-        }
-    })
-    return response.json(vaga);
-})
 
 
 //ENTERPRISE

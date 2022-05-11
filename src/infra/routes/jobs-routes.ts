@@ -1,10 +1,8 @@
 import { Router } from "express";
-import { getAlljobsController } from "../../modules/jobs/abstractions/controllers";
+import { jobsRouter } from "../../modules/jobs/infra/routes";
 
-const jobsRouter = Router();
+const v1Routes = Router();
 
-jobsRouter.get("/", getAlljobsController.handle)
+v1Routes.use("/jobs", jobsRouter);
 
-
-
-export { jobsRouter }
+export { v1Routes }
