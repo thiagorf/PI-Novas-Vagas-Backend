@@ -5,7 +5,7 @@ import { compare, hash } from "bcrypt"
 import { sign } from "jsonwebtoken"
 import "dotenv/config"
 import { checkAuthMiddleware } from "./middlewares/check-auth-middleware";
-import { jobsRouter } from "../modules/jobs/infra/routes";
+import { v1 } from "./routes";
 
 const app = express();
 
@@ -13,8 +13,7 @@ const app = express();
 app.use(cors())
 app.use(json())
 
-
-app.use(jobsRouter)
+app.use(v1);
 
 
 

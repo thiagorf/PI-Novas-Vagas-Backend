@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { jobsRouter } from "../../modules/jobs/infra/routes";
 
-const v1Routes = Router();
+const jobRoutes = Router();
 
-v1Routes.use("/jobs", jobsRouter);
+jobRoutes.use("/jobs", jobsRouter);
 
-export { v1Routes }
+export { jobRoutes }
