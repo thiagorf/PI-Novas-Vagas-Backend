@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getOneJobUseCase } from "../abstractions/useCases";
+import { getOneJobUseCase } from ".";
 
 export class GetOneJobController {
     async handle(request: Request, response: Response) {

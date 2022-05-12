@@ -1,7 +1,5 @@
 import { Response, Request, response } from "express";
-import { deleteJobUseCase } from "../abstractions/useCases";
-
-
+import { deleteJobUseCase } from ".";
 
 export class DeleteJobController {
     async handle(request: Request, repsonse: Response) {

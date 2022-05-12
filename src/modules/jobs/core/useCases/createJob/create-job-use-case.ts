@@ -1,5 +1,5 @@
- import { JobsRepository } from "../../infra/repositories/jobs-repository"
-import { JobsRequiredInfo } from "../../types"
+ import { JobsRepository } from "../../../infra/repositories/jobs-repository"
+import { JobsRequiredInfo } from "../../../types"
 
 
 export class CreateJobUseCase {

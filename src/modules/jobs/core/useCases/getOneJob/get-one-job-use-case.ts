@@ -1,4 +1,4 @@
-import { JobsRepository } from "../../infra/repositories/jobs-repository";
+import { JobsRepository } from "../../../infra/repositories/jobs-repository";
 
 
 

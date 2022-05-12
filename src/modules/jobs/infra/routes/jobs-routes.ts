@@ -1,5 +1,9 @@
 import { Router } from "express"
-import { getAllJobsController, getOneJobController, createJobController, updateJobController, deleteJobController } from "../../abstractions/controllers";
+import { createJobController } from "../../core/useCases/createJob";
+import { deleteJobController } from "../../core/useCases/deleteJob";
+import { getAllJobsController } from "../../core/useCases/getAllJobs";
+import { getOneJobController } from "../../core/useCases/getOneJob";
+import { updateJobController } from "../../core/useCases/updateJob"
 
 const jobsRouter = Router();
 

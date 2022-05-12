@@ -1,5 +1,5 @@
 import prisma from "../../../../infra/database/prisma";
-import { JobsRequiredInfo } from "../../types";
+import { JobsRequiredInfo, JobsRequiredUpdateInfo } from "../../types";
 import { JobsRepository } from "./jobs-repository";
 
 
@@ -32,7 +32,7 @@ export class PrismaJobsRepository implements JobsRepository{
         return result;
     }
 
-    async updateAJob(jobId: number,jobsData: JobsRequiredInfo) {
+    async updateAJob(jobId: number, jobsData: JobsRequiredUpdateInfo) {
         const result = await prisma.jobs.update({
             where: {
                 id: jobId

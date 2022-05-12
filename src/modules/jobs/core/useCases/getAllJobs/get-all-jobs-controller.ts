@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getAllJobsUseCase } from "../abstractions/useCases";
+import { getAllJobsUseCase } from ".";
 
 
 

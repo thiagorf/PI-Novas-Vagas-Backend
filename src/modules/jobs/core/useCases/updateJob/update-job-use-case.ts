@@ -1,5 +1,5 @@
-import { JobsRepository } from "../../infra/repositories/jobs-repository";
-import { JobsRequiredInfo } from "../../types";
+import { JobsRepository } from "../../../infra/repositories/jobs-repository";
+import { JobsRequiredUpdateInfo } from "../../../types";
 
 export class UpdateJobUseCase {
 
@@ -7,7 +7,7 @@ export class UpdateJobUseCase {
         private jobRepository: JobsRepository
     ) {}
 
-    async perform(jobId: number, jobData: JobsRequiredInfo) {
+    async perform(jobId: number, jobData: JobsRequiredUpdateInfo) {
 
         const userExsists = await this.jobRepository.getOneJob(jobId);
         
