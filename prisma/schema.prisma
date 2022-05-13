@@ -16,8 +16,8 @@ model User {
   email String
   password String
 
-  canditado Applicant?
-  empresa Enterprise?
+  applicant Applicant?
+  enterprise Enterprise?
 
   cellphone CellPhone?
   socialmedia SocialMedia?
@@ -45,8 +45,8 @@ model Applicant {
   photo String
   curriculum String
 
-  userID Int
-  user User @relation(fields: [userID], references: [id])
+  user_id Int
+  user User @relation(fields: [user_id], references: [id])
 }
 
 //Emrpesa -> Entreprise
@@ -56,8 +56,8 @@ model Enterprise {
   segment String
   cep Int
 
-  userID Int
-  user User @relation(fields: [userID], references: [id])
+  user_id Int
+  user User @relation(fields: [user_id], references: [id])
 
   jobs Jobs?
 }
