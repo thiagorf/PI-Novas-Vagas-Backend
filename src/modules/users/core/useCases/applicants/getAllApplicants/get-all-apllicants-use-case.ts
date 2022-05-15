@@ -1,5 +1,5 @@
 import { Applicant } from "@prisma/client";
-import { ApplicantRepository } from "../../../infra/repositories/applicant-repository";
+import { ApplicantRepository } from "../../../../infra/repositories/applicant-repository";
 
 export class GetApllicantsUseCase {
     

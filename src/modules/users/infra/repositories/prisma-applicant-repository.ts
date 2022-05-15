@@ -1,6 +1,6 @@
 import { Applicant } from "@prisma/client";
 import prisma from "../../../../infra/database/prisma";
-import { CreateApplicantDTO } from "../../core/useCases/createApplicant/create-applicant-dto";
+import { CreateApplicantDTO } from "../../core/useCases/applicants/createApplicant/create-applicant-dto";
 import { ApplicantRepository } from "./applicant-repository";
 
 export class PrismaApplicantRepository implements ApplicantRepository {
@@ -49,5 +49,6 @@ export class PrismaApplicantRepository implements ApplicantRepository {
 
         return applicants
     }
+
 }
 

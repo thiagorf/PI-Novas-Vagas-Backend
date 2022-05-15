@@ -1,5 +1,5 @@
 import { Applicant } from "@prisma/client";
-import { CreateApplicantDTO } from "../../core/useCases/createApplicant/create-applicant-dto";
+import { CreateApplicantDTO } from "../../core/useCases/applicants/createApplicant/create-applicant-dto";
 
 export interface ApplicantRepository {
     createAnApplicant(applicantData: CreateApplicantDTO): Promise<Applicant>

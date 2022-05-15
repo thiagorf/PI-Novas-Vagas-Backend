@@ -1,4 +1,4 @@
-import { PrismaApplicantRepository } from "../../../infra/repositories/prisma-applicant-repository";
+import { PrismaApplicantRepository } from "../../../../infra/repositories/prisma-applicant-repository";
 import { CreateApplicantController } from "./create-applicant-controller";
 import { CreateApplicantUseCase } from "./create-applicant-use-case";
 

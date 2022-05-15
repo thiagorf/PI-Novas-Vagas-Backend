@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { createApplicantController } from "../../core/useCases/createApplicant";
-import { getAllApplicantsController } from "../../core/useCases/getAllApplicants";
+import {
+    createApplicantController, 
+    getAllApplicantsController 
+} from "../../core/useCases/applicants"
 
 
 const applicantRouter = Router();

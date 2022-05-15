@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { createJobUseCase } from ".";
+import { AuthRequest } from "../../../../../shared/types";
 import { CreateJobDTO } from "./create-job-dto";
 
 export class CreateJobController {
-    async handle(request: Request, response: Response) {
+    async handle(request: AuthRequest, response: Response) {
 
-        const enterprise_id = Number(request.params.id)
+        const enterprise_id = request.user.id
 
         const dto: CreateJobDTO = request.body
 

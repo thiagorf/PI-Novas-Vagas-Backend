@@ -1,5 +1,5 @@
 import { hash } from "bcrypt";
-import { ApplicantRepository } from "../../../infra/repositories/applicant-repository";
+import { ApplicantRepository } from "../../../../infra/repositories/applicant-repository";
 import { CreateApplicantDTO } from "./create-applicant-dto";
 
 export class CreateApplicantUseCase {

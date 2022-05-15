@@ -1,15 +1,18 @@
 import { Router } from "express"
-import { createJobController } from "../../core/useCases/createJob";
-import { deleteJobController } from "../../core/useCases/deleteJob";
-import { getAllJobsController } from "../../core/useCases/getAllJobs";
-import { getOneJobController } from "../../core/useCases/getOneJob";
-import { updateJobController } from "../../core/useCases/updateJob"
+import { checkAuthMiddleware } from "../../../../infra/middlewares/check-auth-middleware";
+import {
+    getAllJobsController,
+    getOneJobController,
+    createJobController,
+    deleteJobController,
+    updateJobController
+} from "../../core/useCases"
 
 const jobsRouter = Router();
 
 jobsRouter.get("/", getAllJobsController.handle);
 jobsRouter.get("/:id", getOneJobController.handle);
-jobsRouter.post("/", createJobController.handle);
+jobsRouter.post("/", checkAuthMiddleware, createJobController.handle);
 jobsRouter.put("/:id", updateJobController.handle);
 jobsRouter.delete("/:id", deleteJobController.handle)
 

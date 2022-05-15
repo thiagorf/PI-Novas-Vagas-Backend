@@ -1,11 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken"
+import { AuthRequest } from "../../shared/types";
 
 interface TokenPayload {
     subject: number
 }
 
-export const checkAuthMiddleware = async (request: Request, response: Response, next: NextFunction) => {
+export const checkAuthMiddleware = async (request: AuthRequest, response: Response, next: NextFunction) => {
 
     const authHeader = request.headers["authorization"]
 
