@@ -25,7 +25,8 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
                     create: {
                         email,
                         name,
-                        password
+                        password,
+                        type: "enterprise"
                     }
                 }
             }
@@ -54,5 +55,38 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
         });
 
         return enterprise;
+    }
+
+    async getEnterpriseByUserId(user_id: number) {
+        const enterprise = await prisma.enterprise.findFirst({
+            where: {
+                user_id
+            }
+        });
+
+        return enterprise;
+    }
+
+    async getEnterpriseById(id: number) : Promise<Enterprise> {
+        const enterprise = await prisma.enterprise.findUnique({
+            where: {
+                id
+            }
+        });
+
+        return enterprise;
+    }
+
+    async getJobs(id: number): Promise<Enterprise> {
+        const enterpriseJobs = await prisma.enterprise.findFirst({
+            where: {
+                id
+            },
+            include: {
+                jobs: true
+            }
+        });
+
+        return enterpriseJobs
     }
 }

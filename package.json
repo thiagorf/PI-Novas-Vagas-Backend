@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/infra/app.ts"
+    "dev": "ts-node-dev --respawn --transpile-only --exit-child src/infra/app.ts"
   },
   "author": "",
   "license": "ISC",

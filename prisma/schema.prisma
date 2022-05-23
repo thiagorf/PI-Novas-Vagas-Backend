@@ -10,11 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserType {
+  applicant
+  enterprise 
+}
+
 model User {
   id Int @id @default(autoincrement())
   name String
   email String
   password String
+
+  type UserType @default(applicant)
 
   applicant Applicant?
   enterprise Enterprise?
@@ -47,6 +54,8 @@ model Applicant {
 
   user_id Int
   user User @relation(fields: [user_id], references: [id])
+
+  jobs ApplicantForJobs[]
 }
 
 //Emrpesa -> Entreprise
@@ -76,6 +85,23 @@ model Jobs {
   started_at DateTime @default(now())
   ends_at DateTime
 
+  applicants ApplicantForJobs[]
+
 }
+
+//Applicant n..* Jobs
+model ApplicantForJobs {
+
+  applicant Applicant @relation(fields: [applicant_id], references: [id])
+  applicant_id Int
+
+  jobs Jobs @relation(fields: [jobs_id], references: [id])
+  jobs_id Int
+
+  created_at DateTime @default(now())
+
+  @@id([applicant_id, jobs_id])
+}
+
 
 //Contato - Pagamento -> pesquisar mais

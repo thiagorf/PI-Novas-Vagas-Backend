@@ -5,5 +5,6 @@ export interface ApplicantRepository {
     createAnApplicant(applicantData: CreateApplicantDTO): Promise<Applicant>
     getApplicantBy(email: string): Promise<Applicant>
     getAllApllicants(): Promise<Applicant[]>
+    getApplicantByUserId(user_id: number): Promise<Applicant>
 
 }

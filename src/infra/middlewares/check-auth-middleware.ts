@@ -1,9 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { NextFunction, Response } from "express";
 import { verify } from "jsonwebtoken"
 import { AuthRequest } from "../../shared/types";
 
 interface TokenPayload {
-    subject: number
+    sub: number
 }
 
 export const checkAuthMiddleware = async (request: AuthRequest, response: Response, next: NextFunction) => {
@@ -19,10 +19,10 @@ export const checkAuthMiddleware = async (request: AuthRequest, response: Respon
     const [, token] = authHeader.split(' ');
     
     try {
-        const { subject } = verify(token, process.env.JWT_SECRET as string) as TokenPayload
+        const { sub } = verify(token, process.env.JWT_SECRET as string) as unknown as TokenPayload
         
         request.user = {
-            id: subject
+            id: sub
         }
         next()
 

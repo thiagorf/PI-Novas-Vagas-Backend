@@ -50,5 +50,14 @@ export class PrismaApplicantRepository implements ApplicantRepository {
         return applicants
     }
 
+    async getApplicantByUserId(user_id: number) {
+        const applicant = await prisma.applicant.findFirst({
+            where: {
+                user_id
+            }
+        });
+
+        return applicant;
+    }
 }
 
