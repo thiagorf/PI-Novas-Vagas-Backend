@@ -10,6 +10,4 @@ app.use(json());
 
 app.use(v1);
 
-console.log("teste");
-
 export { app };
