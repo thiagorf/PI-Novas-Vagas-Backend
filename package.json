@@ -6,7 +6,8 @@
     "scripts": {
         "dev": "ts-node-dev --respawn --transpile-only --exit-child src/infra/app.ts",
         "lint": "eslint src/**/*.ts",
-        "format": "eslint src/**/*.ts --fix"
+        "format": "eslint src/**/*.ts --fix",
+        "prepare": "husky install"
     },
     "author": "",
     "license": "ISC",
