@@ -28,15 +28,25 @@ export class PrismaApplyRepository implements ApplyRepository {
     }
 
     async giveUp(applicant_id: number, jobs_id: number) {
-        const giveUpJob = await prisma.applicantForJobs.delete({
+
+        //const giveUpJob = await prisma.applicantForJobs.update
+
+        //todo
+        return null;
+        //return giveUpJob;
+    }
+
+    async getJobsForAnApplicant(applicant_id: number, ) {
+        const applicant = await prisma.applicantForJobs.findFirst({
             where: {
-                applicant_id_jobs_id: {
-                    applicant_id,
-                    jobs_id
-                }
+                applicant_id
+            },
+            select: {
+                applicant: true,
+                jobs: true,
             }
         });
 
-        return giveUpJob;
+        return applicant
     }
 }

@@ -20,7 +20,7 @@ export const checkAuthMiddleware = async (request: AuthRequest, response: Respon
     
     try {
         const { sub } = verify(token, process.env.JWT_SECRET as string) as unknown as TokenPayload
-        
+
         request.user = {
             id: sub
         }

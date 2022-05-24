@@ -28,15 +28,17 @@ export const checkAuthEnterpriseMiddleware = async (request: AuthRequest, respon
         });
 
         if(!user) {
-            throw new Error("Invalid Token.")
+            return response.status(401).json({
+                msg: "Invalid Token"
+            })
         }
         
-
         if(user.type === "enterprise") {
             request.user = {
                 id: sub
             }
-            next();
+            
+            return next();
         }
 
         return response.status(401).json({

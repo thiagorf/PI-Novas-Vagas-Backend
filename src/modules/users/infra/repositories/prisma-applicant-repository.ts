@@ -1,4 +1,4 @@
-import { Applicant } from "@prisma/client";
+import { Applicant, Jobs } from "@prisma/client";
 import prisma from "../../../../infra/database/prisma";
 import { CreateApplicantDTO } from "../../core/useCases/applicants/createApplicant/create-applicant-dto";
 import { ApplicantRepository } from "./applicant-repository";
@@ -58,6 +58,23 @@ export class PrismaApplicantRepository implements ApplicantRepository {
         });
 
         return applicant;
+    }
+
+    async getApplicantJobs(user_id: number): Promise<any> {
+        const applicantsJobs = await prisma.applicant.findUnique({
+            where: {
+                user_id
+            },
+            include: {
+                jobs: {
+                    include: {
+                        jobs: true
+                    }
+                }
+            }  
+        })
+
+        return applicantsJobs;
     }
 }
 

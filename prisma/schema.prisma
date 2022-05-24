@@ -68,7 +68,7 @@ model Enterprise {
   user_id Int
   user User @relation(fields: [user_id], references: [id])
 
-  jobs Jobs?
+  jobs Jobs[]
 }
 
 // Vagas -> Jobs
@@ -91,16 +91,15 @@ model Jobs {
 
 //Applicant n..* Jobs
 model ApplicantForJobs {
+  id Int @id @default(autoincrement())
 
   applicant Applicant @relation(fields: [applicant_id], references: [id])
   applicant_id Int
 
   jobs Jobs @relation(fields: [jobs_id], references: [id])
-  jobs_id Int
+  jobs_id Int 
 
   created_at DateTime @default(now())
-
-  @@id([applicant_id, jobs_id])
 }
 
 
