@@ -7,6 +7,7 @@
         "dev": "ts-node-dev --respawn --transpile-only --exit-child src/infra/app.ts",
         "lint": "eslint src/**/*.ts",
         "format": "eslint src/**/*.ts --fix",
+        "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
         "prepare": "husky install"
     },
     "author": "",
