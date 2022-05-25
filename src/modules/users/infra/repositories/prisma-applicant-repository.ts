@@ -1,19 +1,11 @@
-import { Applicant, Jobs } from "@prisma/client";
+import { Applicant } from "@prisma/client";
 import prisma from "../../../../infra/database/prisma";
 import { CreateApplicantDTO } from "../../core/useCases/applicants/createApplicant/create-applicant-dto";
 import { ApplicantRepository } from "./applicant-repository";
 
 export class PrismaApplicantRepository implements ApplicantRepository {
-
     async createAnApplicant(applicantData: CreateApplicantDTO): Promise<Applicant> {
-
-        const {
-            curriculum,
-            email,
-            name,
-            password,
-            photo
-        }= applicantData
+        const { curriculum, email, name, password, photo } = applicantData;
 
         const applicant = await prisma.applicant.create({
             data: {
@@ -23,10 +15,10 @@ export class PrismaApplicantRepository implements ApplicantRepository {
                     create: {
                         name,
                         email,
-                        password
-                    }
-                }
-            }
+                        password,
+                    },
+                },
+            },
         });
 
         return applicant;
@@ -36,45 +28,48 @@ export class PrismaApplicantRepository implements ApplicantRepository {
         const applicant = await prisma.applicant.findFirst({
             where: {
                 user: {
-                    email
-                }
-            }
+                    email,
+                },
+            },
         });
 
         return applicant;
     }
 
     async getAllApllicants(): Promise<Applicant[]> {
-        const applicants = await prisma.applicant.findMany()
+        const applicants = await prisma.applicant.findMany();
 
-        return applicants
+        return applicants;
     }
 
     async getApplicantByUserId(user_id: number) {
         const applicant = await prisma.applicant.findFirst({
             where: {
-                user_id
-            }
+                user_id,
+            },
         });
 
         return applicant;
     }
 
     async getApplicantJobs(user_id: number): Promise<any> {
-        const applicantsJobs = await prisma.applicant.findUnique({
+        const applicantsJobs = await prisma.applicant.findMany({
             where: {
-                user_id
+                user_id,
             },
             include: {
                 jobs: {
                     include: {
-                        jobs: true
-                    }
-                }
-            }  
-        })
+                        jobs: true,
+                    },
+                },
+            },
+        });
 
-        return applicantsJobs;
+        const mapJobs = applicantsJobs.map((applicantInfo) => {
+            return { ...applicantInfo, jobs: applicantInfo.jobs.map((job) => job.jobs) };
+        });
+
+        return mapJobs;
     }
 }
-

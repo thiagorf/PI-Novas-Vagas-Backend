@@ -3,14 +3,13 @@ import { checkAuthEnterpriseMiddleware } from "../../../../infra/middlewares/che
 import {
     createEnterpriseController,
     enterpriseAuthController,
-    getJobsForEnterpriseController
+    getJobsForEnterpriseController,
 } from "../../core/useCases/enterprises";
 
+const enterpriseRoutes = Router();
 
-const enterpriseRouter = Router();
+enterpriseRoutes.post("/", createEnterpriseController.handle);
+enterpriseRoutes.post("/login", enterpriseAuthController.handle);
+enterpriseRoutes.get("/:id/jobs", checkAuthEnterpriseMiddleware, getJobsForEnterpriseController.handle);
 
-enterpriseRouter.post("/", createEnterpriseController.handle);
-enterpriseRouter.post("/login", enterpriseAuthController.handle)
-enterpriseRouter.get("/:id/jobs", checkAuthEnterpriseMiddleware, getJobsForEnterpriseController.handle)
-
-export { enterpriseRouter }
+export { enterpriseRoutes };

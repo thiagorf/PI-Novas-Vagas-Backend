@@ -1,20 +1,15 @@
-import { Router } from "express"
-import { applicantsRoutes } from "./applicant-routes";
-import { enterpriseRoutes } from "./enterprise-routes";
-import { jobRoutes } from "./jobs-routes"
-import { userRoutes } from "./user-routes";
+import { Router } from "express";
+import { prefixApplicantsRoutes } from "./prefix-applicant-routes";
+import { prefixEnterpriseRoutes } from "./prefix-enterprise-routes";
+import { prefixJobRoutes } from "./prefix-jobs-routes";
+import { prefixUserRoutes } from "./prefix-user-routes";
 
-const resources = [jobRoutes, applicantsRoutes, enterpriseRoutes, userRoutes]
+const resources = [prefixJobRoutes, prefixApplicantsRoutes, prefixEnterpriseRoutes, prefixUserRoutes];
 
 const v1 = Router();
 
-//v1.use("/v1", jobRoutes)
+resources.forEach((resource) => {
+    v1.use("/v1", resource);
+});
 
-resources.forEach(resource => {
-    v1.use("/v1", resource)
-})
-
-
-
-export { v1 }
-
+export { v1 };

@@ -1,11 +1,10 @@
 import { Router } from "express";
 import { checkEnterpriseJwtController, checkJwtController, userAuthController } from "../../core/useCases/users";
 
-const userRouter = Router();
+const userRoutes = Router();
 
-userRouter.post("/login", userAuthController.handle);
-userRouter.post("/check-jwt", checkJwtController.handle);
-userRouter.post("/check-enterprise", checkEnterpriseJwtController.handle)
+userRoutes.post("/login", userAuthController.handle);
+userRoutes.post("/check-jwt", checkJwtController.handle);
+userRoutes.post("/check-enterprise", checkEnterpriseJwtController.handle);
 
-
-export { userRouter }
+export { userRoutes };

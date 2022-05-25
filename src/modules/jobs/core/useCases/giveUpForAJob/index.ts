@@ -4,20 +4,12 @@ import { PrismaJobsRepository } from "../../../infra/repositories/prisma-jobs-re
 import { GiveUpForAJobController } from "./give-up-for-a-job-controller";
 import { GiveUpForAJobUseCase } from "./give-up-for-a-job-use-case";
 
-
 const jobsRepository = new PrismaJobsRepository();
 const applicantRepository = new PrismaApplicantRepository();
 const applyRepository = new PrismaApplyRepository();
 
-const giveUpForAJobUseCase = new GiveUpForAJobUseCase(
-    jobsRepository,
-    applicantRepository,
-    applyRepository
-);
+const giveUpForAJobUseCase = new GiveUpForAJobUseCase(jobsRepository, applicantRepository, applyRepository);
 
 const giveUpForAJobController = new GiveUpForAJobController();
 
-export {
-    giveUpForAJobUseCase,
-    giveUpForAJobController
-}
+export { giveUpForAJobUseCase, giveUpForAJobController };
