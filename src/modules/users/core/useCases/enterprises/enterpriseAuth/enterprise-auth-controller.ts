@@ -10,7 +10,7 @@ export class EnterpriseAuthController {
 
         return response.json({
             token: result,
-            isEnterprise: true
+            isEnterprise: true,
         });
     }
 }

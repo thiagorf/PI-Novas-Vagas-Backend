@@ -2,17 +2,9 @@ import { PrismaEnterpriseRepository } from "../../../../infra/repositories/prism
 import { CreateEnterpriseController } from "./create-enterprise-controller";
 import { CreateEnterpriseUseCase } from "./create-enterprise-use-case";
 
-
-
 const enterpriseRepository = new PrismaEnterpriseRepository();
-const createEnterpriseUseCase = new CreateEnterpriseUseCase(
-    enterpriseRepository
-);
+const createEnterpriseUseCase = new CreateEnterpriseUseCase(enterpriseRepository);
 
 const createEnterpriseController = new CreateEnterpriseController();
 
-
-export { 
-    createEnterpriseController,
-    createEnterpriseUseCase
-}
+export { createEnterpriseController, createEnterpriseUseCase };

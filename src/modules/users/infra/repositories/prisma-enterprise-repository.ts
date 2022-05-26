@@ -3,18 +3,9 @@ import { Enterprise } from "../../core/entity/Enterprises";
 import { CreateEnterpriseDTO } from "../../core/useCases/enterprises/createEnterprise/create-enterprise-dto";
 import { EnterpriseRepository } from "./enterprise-repository";
 
-
-
 export class PrismaEnterpriseRepository implements EnterpriseRepository {
     async createAnEnterprise(dto: CreateEnterpriseDTO): Promise<Enterprise> {
-        const {
-            cep,
-            cnpj,
-            email,
-            name,
-            password,
-            segment
-        } = dto;
+        const { cep, cnpj, email, name, password, segment } = dto;
 
         const enterprise = await prisma.enterprise.create({
             data: {
@@ -26,10 +17,10 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
                         email,
                         name,
                         password,
-                        type: "enterprise"
-                    }
-                }
-            }
+                        type: "enterprise",
+                    },
+                },
+            },
         });
 
         return enterprise;
@@ -38,8 +29,8 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
     async getEterpriseBy(cnpj: string): Promise<Enterprise> {
         const enterprise = await prisma.enterprise.findFirst({
             where: {
-                cnpj
-            }
+                cnpj,
+            },
         });
 
         return enterprise;
@@ -49,9 +40,9 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
         const enterprise = await prisma.enterprise.findFirst({
             where: {
                 user: {
-                    email
-                }
-            }
+                    email,
+                },
+            },
         });
 
         return enterprise;
@@ -60,18 +51,18 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
     async getEnterpriseByUserId(user_id: number) {
         const enterprise = await prisma.enterprise.findFirst({
             where: {
-                user_id
-            }
+                user_id,
+            },
         });
 
         return enterprise;
     }
 
-    async getEnterpriseById(id: number) : Promise<Enterprise> {
+    async getEnterpriseById(id: number): Promise<Enterprise> {
         const enterprise = await prisma.enterprise.findUnique({
             where: {
-                id
-            }
+                id,
+            },
         });
 
         return enterprise;
@@ -80,13 +71,13 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
     async getJobs(id: number): Promise<Enterprise> {
         const enterpriseJobs = await prisma.enterprise.findFirst({
             where: {
-                id
+                id,
             },
             include: {
-                jobs: true
-            }
+                jobs: true,
+            },
         });
 
-        return enterpriseJobs
+        return enterpriseJobs;
     }
 }

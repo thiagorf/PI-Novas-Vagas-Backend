@@ -5,15 +5,8 @@ import { CreateJobUseCase } from "./create-job-use-case";
 
 const jobRepository = new PrismaJobsRepository();
 const enterpriseRepository = new PrismaEnterpriseRepository();
-const createJobUseCase = new CreateJobUseCase(
-    jobRepository,
-    enterpriseRepository
-)
-
+const createJobUseCase = new CreateJobUseCase(jobRepository, enterpriseRepository);
 
 const createJobController = new CreateJobController();
 
-export {
-    createJobController,
-    createJobUseCase
-}
+export { createJobController, createJobUseCase };

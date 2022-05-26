@@ -4,21 +4,12 @@ import { PrismaApplyRepository } from "../../../../users/infra/repositories/pris
 import { ApplyForAJobUseCase } from "./apply-for-a-job-use-case";
 import { ApplyForAJobController } from "./apply-for-a-job-controller";
 
-
-
 const applicantRepository = new PrismaApplicantRepository();
 const jobsRepository = new PrismaJobsRepository();
 const applyRepository = new PrismaApplyRepository();
 
-const applyForAJobUseCase = new ApplyForAJobUseCase(
-    applicantRepository,
-    jobsRepository,
-    applyRepository
-);
+const applyForAJobUseCase = new ApplyForAJobUseCase(applicantRepository, jobsRepository, applyRepository);
 
-const applyForAJobController = new ApplyForAJobController()
+const applyForAJobController = new ApplyForAJobController();
 
-export {
-    applyForAJobUseCase,
-    applyForAJobController
-}
+export { applyForAJobUseCase, applyForAJobController };

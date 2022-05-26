@@ -10,6 +10,6 @@ const applicantRoutes = Router();
 
 applicantRoutes.post("/", createApplicantController.handle);
 applicantRoutes.get("/", getAllApplicantsController.handle);
-applicantRoutes.post("/:id/jobs", checkAuthMiddleware, getJobsForApplicantController.handle);
+applicantRoutes.get("/:id/jobs", checkAuthMiddleware, getJobsForApplicantController.handle);
 
 export { applicantRoutes };

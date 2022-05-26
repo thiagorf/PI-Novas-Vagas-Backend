@@ -2,31 +2,27 @@ import prisma from "../../../../infra/database/prisma";
 import { JobsRequiredInfo, JobsRequiredUpdateInfo } from "../../types";
 import { JobsRepository } from "./jobs-repository";
 
-
-export class PrismaJobsRepository implements JobsRepository{
-
+export class PrismaJobsRepository implements JobsRepository {
     //Jobs or Job?
     async getAllJobs() {
         const result = await prisma.jobs.findMany();
 
         return result;
-
     }
 
     async getOneJob(jobId: number) {
         const result = await prisma.jobs.findUnique({
             where: {
-                id: jobId
-            }
+                id: jobId,
+            },
         });
 
         return result;
     }
 
     async createANewJob(jobsData: JobsRequiredInfo) {
-
         const result = await prisma.jobs.create({
-            data: jobsData
+            data: jobsData,
         });
 
         return result;
@@ -35,9 +31,9 @@ export class PrismaJobsRepository implements JobsRepository{
     async updateAJob(jobId: number, jobsData: JobsRequiredUpdateInfo) {
         const result = await prisma.jobs.update({
             where: {
-                id: jobId
+                id: jobId,
             },
-            data: jobsData
+            data: jobsData,
         });
 
         return result;
@@ -46,8 +42,8 @@ export class PrismaJobsRepository implements JobsRepository{
     async deleteAJob(jobId: number) {
         const result = await prisma.jobs.delete({
             where: {
-                id: jobId
-            }
+                id: jobId,
+            },
         });
 
         return result;

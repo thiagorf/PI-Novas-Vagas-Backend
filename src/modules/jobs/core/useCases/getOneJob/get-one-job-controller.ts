@@ -7,6 +7,6 @@ export class GetOneJobController {
 
         const result = await getOneJobUseCase.perform(id);
 
-        return response.json(result)
+        return response.json(result);
     }
 }

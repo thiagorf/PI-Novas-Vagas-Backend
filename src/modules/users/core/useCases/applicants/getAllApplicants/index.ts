@@ -2,15 +2,9 @@ import { PrismaApplicantRepository } from "../../../../infra/repositories/prisma
 import { GetApllicantsUseCase } from "./get-all-apllicants-use-case";
 import { GetAllApllicantsController } from "./get-all-applicants-controller";
 
-
 const applicantRepository = new PrismaApplicantRepository();
-const getAllApllicantsUseCase = new GetApllicantsUseCase(
-    applicantRepository
-);
+const getAllApllicantsUseCase = new GetApllicantsUseCase(applicantRepository);
 
-const getAllApplicantsController = new GetAllApllicantsController()
+const getAllApplicantsController = new GetAllApllicantsController();
 
-export {
-    getAllApllicantsUseCase,
-    getAllApplicantsController
-}
+export { getAllApllicantsUseCase, getAllApplicantsController };

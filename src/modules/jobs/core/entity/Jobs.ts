@@ -5,8 +5,7 @@ export interface Jobs {
     address: string;
     description: string;
     enterprise_id: number;
-  
+
     started_at: Date;
-    ends_at: Date
-  
+    ends_at: Date;
 }

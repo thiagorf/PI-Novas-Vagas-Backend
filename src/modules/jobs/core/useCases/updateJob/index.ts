@@ -2,12 +2,9 @@ import { PrismaJobsRepository } from "../../../infra/repositories/prisma-jobs-re
 import { UpdateJobController } from "./update-job-controller";
 import { UpdateJobUseCase } from "./update-job-use-case";
 
-
 const jobRepository = new PrismaJobsRepository();
-const updateJobUseCase = new UpdateJobUseCase(
-    jobRepository
-)
+const updateJobUseCase = new UpdateJobUseCase(jobRepository);
 
 const updateJobController = new UpdateJobController();
 
-export { updateJobController, updateJobUseCase }
+export { updateJobController, updateJobUseCase };

@@ -1,1 +1,1 @@
-export * from "./jobs-routes"
+export * from "./jobs-routes";

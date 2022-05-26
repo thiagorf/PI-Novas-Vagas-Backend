@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { checkAuthEnterpriseMiddleware } from "../../../../infra/middlewares/check-auth-enterprise-middleware";
 import {
     createEnterpriseController,
     enterpriseAuthController,
@@ -10,6 +9,6 @@ const enterpriseRoutes = Router();
 
 enterpriseRoutes.post("/", createEnterpriseController.handle);
 enterpriseRoutes.post("/login", enterpriseAuthController.handle);
-enterpriseRoutes.get("/:id/jobs", checkAuthEnterpriseMiddleware, getJobsForEnterpriseController.handle);
+enterpriseRoutes.get("/:id/jobs", getJobsForEnterpriseController.handle);
 
 export { enterpriseRoutes };

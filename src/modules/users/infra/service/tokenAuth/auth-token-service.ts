@@ -3,6 +3,6 @@ export interface TokenPayload {
 }
 
 export interface AuthTokenService {
-    encode(payload: TokenPayload): string
-    decode(token: string): TokenPayload
+    encode(payload: TokenPayload): string;
+    decode(token: string): TokenPayload;
 }
