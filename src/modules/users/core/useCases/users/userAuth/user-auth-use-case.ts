@@ -1,11 +1,10 @@
-import { Applicant, Enterprise } from "@prisma/client";
 import { compare } from "bcrypt";
 import { ApplicantRepository } from "../../../../infra/repositories/applicant-repository";
 import { EnterpriseRepository } from "../../../../infra/repositories/enterprise-repository";
 import { UserRepository } from "../../../../infra/repositories/user-repository";
 import { AuthTokenService } from "../../../../infra/service/tokenAuth/auth-token-service";
 import { UserAuthDTO } from "./user-auth-dto";
-import { AuthApplicant } from "./user-types";
+import { AuthApplicant, AuthEnterprise } from "./user-types";
 
 export class UserAuthUseCase {
     constructor(
@@ -45,7 +44,7 @@ export class UserAuthUseCase {
         return this.formatAuthResponse(token, { ...applicantData, email, name, type });
     }
 
-    private formatAuthResponse(token: string, userType: AuthApplicant | Enterprise) {
+    private formatAuthResponse(token: string, userType: AuthApplicant | AuthEnterprise) {
         return {
             token: token,
             user: userType,
