@@ -80,4 +80,23 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
 
         return enterpriseJobs;
     }
+
+    async getAllEnterpriseInfo(enterprise_id: number): Promise<Enterprise> {
+        const enterprise = await prisma.enterprise.findUnique({
+            where: {
+                id: enterprise_id,
+            },
+            include: {
+                user: {
+                    select: {
+                        name: true,
+                        email: true,
+                        type: true,
+                    },
+                },
+            },
+        });
+
+        return enterprise;
+    }
 }

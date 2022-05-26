@@ -7,4 +7,5 @@ export interface EnterpriseRepository {
     getEnterpriseByUserId(user_id: number): Promise<Enterprise>;
     getJobs(id: number): Promise<Enterprise>;
     getEnterpriseById(id: number): Promise<Enterprise>;
+    getAllEnterpriseInfo(enterprise_id: number): Promise<Enterprise>;
 }
