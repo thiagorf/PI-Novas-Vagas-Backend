@@ -5,6 +5,7 @@ import { EnterpriseRepository } from "../../../../infra/repositories/enterprise-
 import { UserRepository } from "../../../../infra/repositories/user-repository";
 import { AuthTokenService } from "../../../../infra/service/tokenAuth/auth-token-service";
 import { UserAuthDTO } from "./user-auth-dto";
+import { AuthApplicant } from "./user-types";
 
 export class UserAuthUseCase {
     constructor(
@@ -27,6 +28,8 @@ export class UserAuthUseCase {
             throw new Error("Invalid email or password.");
         }
 
+        const { email, name, type } = userExist;
+
         const token = this.authService.encode({
             sub: userExist.id,
         });
@@ -34,15 +37,15 @@ export class UserAuthUseCase {
         if (userExist.type === "enterprise") {
             const enterpriseData = await this.enterpriseRepository.getEnterpriseByUserId(userExist.id);
 
-            return this.formatAuthResponse(token, enterpriseData);
+            return this.formatAuthResponse(token, { ...enterpriseData, email, name, type });
         }
 
         const applicantData = await this.applicantRepository.getApplicantByUserId(userExist.id);
 
-        return this.formatAuthResponse(token, applicantData);
+        return this.formatAuthResponse(token, { ...applicantData, email, name, type });
     }
 
-    private formatAuthResponse(token: string, userType: Applicant | Enterprise) {
+    private formatAuthResponse(token: string, userType: AuthApplicant | Enterprise) {
         return {
             token: token,
             user: userType,
