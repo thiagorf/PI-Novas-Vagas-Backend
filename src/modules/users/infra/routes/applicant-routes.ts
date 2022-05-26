@@ -4,6 +4,7 @@ import {
     createApplicantController,
     getAllApplicantsController,
     getJobsForApplicantController,
+    getOneApplicantController,
 } from "../../core/useCases/applicants";
 
 const applicantRoutes = Router();
@@ -11,5 +12,6 @@ const applicantRoutes = Router();
 applicantRoutes.post("/", createApplicantController.handle);
 applicantRoutes.get("/", getAllApplicantsController.handle);
 applicantRoutes.get("/:id/jobs", checkAuthMiddleware, getJobsForApplicantController.handle);
+applicantRoutes.get("/:id", getOneApplicantController.handle);
 
 export { applicantRoutes };

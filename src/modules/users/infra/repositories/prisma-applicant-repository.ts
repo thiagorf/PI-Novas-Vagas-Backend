@@ -80,4 +80,14 @@ export class PrismaApplicantRepository implements ApplicantRepository {
 
         return mapJobs;
     }
+
+    async getApplicantById(applicant_id: number): Promise<Applicant> {
+        const applicant = await prisma.applicant.findUnique({
+            where: {
+                id: applicant_id,
+            },
+        });
+
+        return applicant;
+    }
 }
