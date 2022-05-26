@@ -8,4 +8,5 @@ export interface ApplicantRepository {
     getApplicantByUserId(user_id: number): Promise<Applicant>;
     getApplicantJobs(user_id: number): Promise<any>; // eslint-disable-line
     getApplicantById(applicant_id: number): Promise<Applicant>;
+    getAllApplicantInfo(applicant_id: number): Promise<Applicant>;
 }

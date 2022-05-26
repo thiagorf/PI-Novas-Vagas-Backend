@@ -60,7 +60,8 @@ export class PrismaApplicantRepository implements ApplicantRepository {
         return applicant;
     }
 
-    async getApplicantJobs(user_id: number): Promise<any> { // eslint-disable-line
+    /* eslint-disable */
+    async getApplicantJobs(user_id: number): Promise<any> {
         const applicantsJobs = await prisma.applicant.findMany({
             where: {
                 user_id,
@@ -80,11 +81,31 @@ export class PrismaApplicantRepository implements ApplicantRepository {
 
         return mapJobs;
     }
+    /* eslint-enable */
 
     async getApplicantById(applicant_id: number): Promise<Applicant> {
         const applicant = await prisma.applicant.findUnique({
             where: {
                 id: applicant_id,
+            },
+        });
+
+        return applicant;
+    }
+
+    async getAllApplicantInfo(applicant_id: number): Promise<Applicant> {
+        const applicant = await prisma.applicant.findUnique({
+            where: {
+                id: applicant_id,
+            },
+            include: {
+                user: {
+                    select: {
+                        name: true,
+                        email: true,
+                        type: true,
+                    },
+                },
             },
         });
 
