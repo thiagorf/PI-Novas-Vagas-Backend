@@ -1,6 +1,5 @@
 import { ApplicantForJobs } from "@prisma/client";
 import prisma from "../../../../infra/database/prisma";
-import { Apply } from "../../core/entity/Apply";
 import { ApplyRepository } from "./apply-repository";
 
 export class PrismaApplyRepository implements ApplyRepository {
@@ -24,32 +23,6 @@ export class PrismaApplyRepository implements ApplyRepository {
         });
 
         return hasApplied;
-    }
-
-    async getJobsForAnApplicant(applicant_id: number) {
-        /*const applicant = await prisma.applicantForJobs.findFirst({
-            where: {
-                applicant_id,
-            },
-            select: {
-                applicant: true,
-                jobs: true,
-            },
-        });
-
-        return applicant;*/
-        const applicant = await prisma.applicantForJobs.findMany({
-            where: {
-                AND: [
-                    {
-                        applicant_id,
-                    },
-                ],
-            },
-            select: {
-                jobs: true,
-            },
-        });
     }
 
     async giveUp(applicant_id: number, number_id: number): Promise<ApplicantForJobs> {

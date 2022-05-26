@@ -1,7 +1,15 @@
-import { Applicant } from "@prisma/client";
+import { Applicant, Jobs } from "@prisma/client";
 import prisma from "../../../../infra/database/prisma";
 import { CreateApplicantDTO } from "../../core/useCases/applicants/createApplicant/create-applicant-dto";
 import { ApplicantRepository } from "./applicant-repository";
+
+export type MapJobs = {
+    jobs: Jobs[];
+    id: number;
+    photo: string;
+    curriculum: string;
+    user_id: number;
+};
 
 export class PrismaApplicantRepository implements ApplicantRepository {
     async createAnApplicant(applicantData: CreateApplicantDTO): Promise<Applicant> {
@@ -52,7 +60,7 @@ export class PrismaApplicantRepository implements ApplicantRepository {
         return applicant;
     }
 
-    async getApplicantJobs(user_id: number): Promise<any> {
+    async getApplicantJobs(user_id: number): Promise<any> { // eslint-disable-line
         const applicantsJobs = await prisma.applicant.findMany({
             where: {
                 user_id,
