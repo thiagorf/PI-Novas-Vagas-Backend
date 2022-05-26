@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { getJobsForApplicantUseCase } from ".";
 import { AuthRequest } from "../../../../../../shared/types";
 

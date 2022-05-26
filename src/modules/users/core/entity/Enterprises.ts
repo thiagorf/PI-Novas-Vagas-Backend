@@ -1,7 +1,7 @@
 export interface Enterprise {
-    id: number
-    cnpj: String
-    segment: String
-    cep: number
-    user_id: number
+    id: number;
+    cnpj: string;
+    segment: string;
+    cep: number;
+    user_id: number;
 }

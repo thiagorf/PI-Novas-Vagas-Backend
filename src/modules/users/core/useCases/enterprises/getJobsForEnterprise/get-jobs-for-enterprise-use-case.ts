@@ -1,19 +1,21 @@
 import { EnterpriseRepository } from "../../../../infra/repositories/enterprise-repository";
 
 export class GetJobsEnterpriseUseCase {
+    constructor(private enterpriseRepository: EnterpriseRepository) {}
 
-    constructor(
-        private enterpriseRepository: EnterpriseRepository
-    ) {}
+    async perform(enterprise_id: number, authenticated_id: number) {
+        //const enterprise = await this.enterpriseRepository.getEnterpriseById(id);
+        const enterprise = await this.enterpriseRepository.getEnterpriseByUserId(authenticated_id);
 
-    async perform(id: number) {
-        const enterprise = await this.enterpriseRepository.getEnterpriseById(id);
-
-        if(!enterprise) {
-            throw new Error("Invalid or inexisting enterprise")
+        if (!enterprise) {
+            throw new Error("Invalid or inexisting enterprise");
         }
 
-        const enterpriseJobs = await this.enterpriseRepository.getJobs(id);
+        if (enterprise.id != enterprise_id) {
+            throw new Error("Unauthorized.");
+        }
+
+        const enterpriseJobs = await this.enterpriseRepository.getJobs(enterprise.id);
 
         return enterpriseJobs;
     }
