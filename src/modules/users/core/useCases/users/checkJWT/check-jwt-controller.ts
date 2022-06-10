@@ -1,12 +1,14 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { checkJwtUseCase } from ".";
-import { CheckJwtDTO } from "./check-jwt-dto";
+import { AuthRequest } from "../../../../../../shared/types";
 
 export class CheckJwtController {
-    async handle(request: Request, response: Response) {
-        const dto: CheckJwtDTO = request.body;
+    async handle(request: AuthRequest, response: Response) {
+        const authHeader = request.headers["authorization"];
 
-        const result = await checkJwtUseCase.perform(dto);
+        const [, token] = authHeader.split(" ");
+
+        const result = await checkJwtUseCase.perform(token);
 
         return response.json(result);
     }
