@@ -1,4 +1,21 @@
-# How to Run
+# PI-Novas-Vagas-Backend (WIP)
+
+[frontend repo](https://github.com/thiagorf/PI-Novas-Vagas-Frontend)
+
+## Future features
+
+File storage with Filebase (Decentralized Storage)
+>Just to test it
+
+
+Use files to create resources
+>For example, create resources based on rows in excel file probably with a stream
+
+Produce PDF reports.
+
+DevOps
+
+## How to Run
 
 Download or clone the project in github page
 
