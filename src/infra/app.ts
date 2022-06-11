@@ -1,5 +1,7 @@
 import { app } from "./server";
 
-app.listen(8000, () => {
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
     console.log("Servidor rodando!"); // eslint-disable-line
 });
