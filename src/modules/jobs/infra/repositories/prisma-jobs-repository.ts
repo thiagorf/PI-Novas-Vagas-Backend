@@ -30,9 +30,25 @@ export class PrismaJobsRepository implements JobsRepository {
             where: {
                 id: jobId,
             },
+            include: {
+                enterprise: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                                email: true,
+                                cellphone: true,
+                                socialmedia: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
 
-        return result;
+        const formatedJob = { ...result, enterprise: { ...result.enterprise.user } };
+
+        return formatedJob;
     }
 
     async createANewJob(jobsData: JobsRequiredInfo) {
