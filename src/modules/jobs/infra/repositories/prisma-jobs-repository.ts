@@ -3,11 +3,26 @@ import { JobsRequiredInfo, JobsRequiredUpdateInfo } from "../../types";
 import { JobsRepository } from "./jobs-repository";
 
 export class PrismaJobsRepository implements JobsRepository {
-    //Jobs or Job?
     async getAllJobs() {
-        const result = await prisma.jobs.findMany();
+        const result = await prisma.jobs.findMany({
+            include: {
+                enterprise: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                            },
+                        },
+                    },
+                },
+            },
+        });
 
-        return result;
+        const mapJobs = result.map((jobsInfo) => {
+            return { ...jobsInfo, enterprise: jobsInfo.enterprise.user };
+        });
+
+        return mapJobs;
     }
 
     async getOneJob(jobId: number) {
