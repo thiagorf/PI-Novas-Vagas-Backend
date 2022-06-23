@@ -62,11 +62,18 @@ export class PrismaApplicantRepository implements ApplicantRepository {
 
     /* eslint-disable */
     async getApplicantJobs(user_id: number): Promise<any> {
-        const applicantsJobs = await prisma.applicant.findMany({
+        const applicantsJobs = await prisma.applicant.findUnique({
             where: {
                 user_id,
             },
             include: {
+                user: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                    },
+                },
                 jobs: {
                     include: {
                         jobs: true,
@@ -75,9 +82,9 @@ export class PrismaApplicantRepository implements ApplicantRepository {
             },
         });
 
-        const mapJobs = applicantsJobs.map((applicantInfo) => {
-            return { ...applicantInfo, jobs: applicantInfo.jobs.map((job) => job.jobs) };
-        });
+        const jobs = applicantsJobs.jobs.map((job) => ({ ...job.jobs }));
+
+        const mapJobs = { ...applicantsJobs.user, jobs: jobs };
 
         return mapJobs;
     }
