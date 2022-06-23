@@ -76,13 +76,28 @@ export class PrismaApplicantRepository implements ApplicantRepository {
                 },
                 jobs: {
                     include: {
-                        jobs: true,
+                        jobs: {
+                            include: {
+                                enterprise: {
+                                    include: {
+                                        user: {
+                                            select: {
+                                                name: true,
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
                     },
                 },
             },
         });
 
-        const jobs = applicantsJobs.jobs.map((job) => ({ ...job.jobs }));
+        const jobs = applicantsJobs.jobs.map((job) => ({
+            ...job.jobs,
+            enterprise: { name: job.jobs.enterprise.user.name },
+        }));
 
         const mapJobs = { ...applicantsJobs.user, jobs: jobs };
 
