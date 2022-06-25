@@ -8,4 +8,5 @@ export interface EnterpriseRepository {
     getJobs(id: number): Promise<Enterprise>;
     getEnterpriseById(id: number): Promise<Enterprise>;
     getAllEnterpriseInfo(enterprise_id: number): Promise<Enterprise>;
+    getOneJobForEnterprise(enterprise_id: number, job_id: number): Promise<any>;
 }
