@@ -68,17 +68,39 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
         return enterprise;
     }
 
-    async getJobs(id: number): Promise<Enterprise> {
-        const enterpriseJobs = await prisma.enterprise.findFirst({
+    async getJobs(id: number): Promise<any> {
+        const enterpriseJobs = await prisma.enterprise.findUnique({
             where: {
                 id,
             },
             include: {
-                jobs: true,
+                jobs: {
+                    include: {
+                        enterprise: {
+                            include: {
+                                user: {
+                                    select: {
+                                        name: true,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             },
         });
 
-        return enterpriseJobs;
+        const formated = {
+            ...enterpriseJobs,
+            jobs: enterpriseJobs.jobs.map((job) => ({
+                ...job,
+                enterprise: {
+                    name: job.enterprise.user.name,
+                },
+            })),
+        };
+
+        return formated;
     }
 
     async getAllEnterpriseInfo(enterprise_id: number): Promise<Enterprise> {

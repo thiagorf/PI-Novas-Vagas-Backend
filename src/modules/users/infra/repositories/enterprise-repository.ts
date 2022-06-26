@@ -5,7 +5,7 @@ export interface EnterpriseRepository {
     createAnEnterprise(dto: CreateEnterpriseDTO): Promise<Enterprise>;
     getEterpriseBy(cnpj: string): Promise<Enterprise>;
     getEnterpriseByUserId(user_id: number): Promise<Enterprise>;
-    getJobs(id: number): Promise<Enterprise>;
+    getJobs(id: number): Promise<any>;
     getEnterpriseById(id: number): Promise<Enterprise>;
     getAllEnterpriseInfo(enterprise_id: number): Promise<Enterprise>;
     getOneJobForEnterprise(enterprise_id: number, job_id: number): Promise<any>;
