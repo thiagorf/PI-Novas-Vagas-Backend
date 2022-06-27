@@ -155,10 +155,10 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
             },
         });
 
-        const formatResponse = enterpriseOneJob.jobs.map((job) => ({
-            ...job,
-            applicants: job.applicants.map((applicant) => ({ ...applicant.applicant })),
-        }));
+        const formatResponse = {
+            ...enterpriseOneJob.jobs[0],
+            applicants: enterpriseOneJob.jobs[0].applicants.map((user) => ({ ...user.applicant })),
+        };
 
         return formatResponse;
     }
