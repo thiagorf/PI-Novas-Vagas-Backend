@@ -52,8 +52,23 @@ export class GetAllJobsSort {
 
         const result = await prisma.jobs.findMany({
             where: { ...conditions },
+            include: {
+                enterprise: {
+                    include: {
+                        user: {
+                            select: {
+                                name: true,
+                            },
+                        },
+                    },
+                },
+            },
         });
 
-        return result;
+        const mapJobs = result.map((jobsInfo) => {
+            return { ...jobsInfo, enterprise: jobsInfo.enterprise.user };
+        });
+
+        return mapJobs;
     }
 }
