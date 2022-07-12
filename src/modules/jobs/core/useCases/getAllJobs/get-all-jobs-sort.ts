@@ -1,19 +1,29 @@
-import prisma from "../../../../../infra/database/prisma";
 import { JobsRepository } from "../../../infra/repositories/jobs-repository";
 import { PossibleQuerys } from "./get-all-jobs-controller";
+import prisma from "../../../../../infra/database/prisma";
+
+interface PrismaWhereOptions {
+    title?: any;
+    address?: any;
+    salary?: any;
+    started_at?: any;
+    ends_at?: any;
+}
 
 export class GetAllJobsSort {
     constructor(private jobsRepository: JobsRepository) {}
 
     async handle(possibleQuerys: PossibleQuerys) {
-        let conditions = {};
+        let conditions: PrismaWhereOptions = {};
 
         if (possibleQuerys.q) {
             conditions = {
                 ...conditions,
                 title: {
-                    contains: possibleQuerys.q,
-                    mode: "insensitive",
+                    search: possibleQuerys.q,
+                },
+                address: {
+                    search: possibleQuerys.q,
                 },
             };
         }
@@ -22,6 +32,7 @@ export class GetAllJobsSort {
             conditions = {
                 ...conditions,
                 address: {
+                    ...conditions.address,
                     contains: possibleQuerys.address,
                     mode: "insensitive",
                 },
@@ -50,6 +61,7 @@ export class GetAllJobsSort {
             };
         }
 
+        console.log(conditions);
         const result = await prisma.jobs.findMany({
             where: { ...conditions },
             include: {

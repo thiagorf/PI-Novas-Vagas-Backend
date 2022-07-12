@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -34,7 +35,7 @@ model CellPhone {
   id Int @id @default(autoincrement())
 
   user User @relation(fields: [user_id], references: [id])
-  user_id Int
+  user_id Int @unique
 }
 
 model SocialMedia {
@@ -43,7 +44,7 @@ model SocialMedia {
   reference String
 
   user User @relation(fields: [user_id], references: [id])
-  user_id Int
+  user_id Int @unique
 }
 
 //Candidato -> Applicant
@@ -52,7 +53,7 @@ model Applicant {
   photo String
   curriculum String
 
-  user_id Int
+  user_id Int @unique
   user User @relation(fields: [user_id], references: [id])
 
   jobs ApplicantForJobs[]
@@ -65,7 +66,7 @@ model Enterprise {
   segment String
   cep Int
 
-  user_id Int
+  user_id Int @unique
   user User @relation(fields: [user_id], references: [id])
 
   jobs Jobs[]
