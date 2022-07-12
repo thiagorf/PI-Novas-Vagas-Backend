@@ -14,6 +14,6 @@ describe("Get All Jobs", () => {
 
         const sut = await getAllJobsUseCase.perform();
 
-        expect(sut).toStrictEqual([]);
+        expect(sut).toBe([]);
     });
 });
