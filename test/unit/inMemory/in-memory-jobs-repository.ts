@@ -28,6 +28,20 @@ export class InMemoryJobsRepository implements JobsRepository {
 
         return newJob;
     }
-    updateAJob: (jobId: number, jobInfo: JobsRequiredUpdateInfo) => Promise<Jobs>;
-    deleteAJob: (jobId: number) => Promise<Jobs>;
+
+    async updateAJob(jobId: number, jobInfo: JobsRequiredUpdateInfo): Promise<Jobs> {
+        const jobIndex = this.jobs.findIndex((job) => job.id === jobId);
+
+        this.jobs[jobIndex] = { ...this.jobs[jobIndex], ...jobInfo };
+
+        return this.jobs[jobIndex];
+    }
+
+    async deleteAJob(jobId: number): Promise<Jobs> {
+        const jobIndex = this.jobs.findIndex((job) => job.id === jobId);
+
+        const deletedJob = this.jobs.splice(jobIndex, 1);
+
+        return deletedJob[0];
+    }
 }
