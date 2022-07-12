@@ -6,11 +6,22 @@ export class InMemoryEnterpriseRepository implements EnterpriseRepository {
     private id = 0;
     private enterprise: Enterprise[] = [];
 
-    createAnEnterprise(dto: CreateEnterpriseDTO): Promise<Enterprise> {
-        throw new Error("Method not implemented.");
+    async createAnEnterprise(dto: CreateEnterpriseDTO): Promise<Enterprise> {
+        const enterprise: Enterprise = {
+            id: this.id,
+            user_id: this.id,
+            ...dto,
+        };
+
+        this.enterprise.push(enterprise);
+
+        return enterprise;
     }
-    getEterpriseBy(cnpj: string): Promise<Enterprise> {
-        throw new Error("Method not implemented.");
+
+    async getEterpriseBy(cnpj: string): Promise<Enterprise> {
+        const enterprise = this.enterprise.find((enterprise) => enterprise.cnpj === cnpj);
+
+        return enterprise;
     }
     getEnterpriseByUserId(user_id: number): Promise<Enterprise> {
         throw new Error("Method not implemented.");
