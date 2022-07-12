@@ -11,7 +11,5 @@ const prepareUseCase = () => {
 };
 
 describe("Create Job Test", () => {
-    it("Should be able to create a new job", async () => {
-        const { createJobUseCase } = prepareUseCase();
-    });
+    test.todo("Should be able to create a new job");
 });
