@@ -1,0 +1,28 @@
+version: "3"
+
+services:
+    database:
+        image: postgres
+        restart: always
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=1234
+            - POSTGRES_DB=nvagas
+        volumes:
+            - pgdata:/var/lib/postgres/data
+
+    app:
+        build: .
+        ports:
+            - 8000:8000
+        depends_on:
+            - database
+        environment:
+            - DATABASE_URL=postgresql://postgres:1234@database:5432/nvagas?schema=public
+        volumes:
+            - .:/usr/app
+            - /usr/app/node_modules
+volumes:
+    pgdata:
