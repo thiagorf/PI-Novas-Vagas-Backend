@@ -8,7 +8,7 @@ export class UpdateJobUseCase {
         const userExsists = await this.jobRepository.getOneJob(jobId);
 
         if (!userExsists) {
-            throw new Error("Invalid or inexisting job.");
+            throw new Error("Invalid or inexisting job");
         }
 
         const result = await this.jobRepository.updateAJob(jobId, jobData);

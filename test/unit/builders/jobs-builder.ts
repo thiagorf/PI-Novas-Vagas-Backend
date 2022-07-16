@@ -25,6 +25,16 @@ export class JobsBuilder {
         return this;
     }
 
+    public withDifferentData() {
+        this.jobs = {
+            ...this.jobs,
+            title: "Full Stack Developer",
+            description: "Javascript full stack developer",
+        };
+
+        return this;
+    }
+
     public build() {
         return this.jobs;
     }
