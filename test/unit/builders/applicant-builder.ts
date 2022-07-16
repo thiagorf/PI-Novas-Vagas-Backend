@@ -15,6 +15,12 @@ export class ApplicantBuilder {
         return new ApplicantBuilder();
     }
 
+    public withUserId(user_id: number) {
+        this.applicant.user_id = user_id;
+
+        return this;
+    }
+
     public build() {
         return this.applicant;
     }

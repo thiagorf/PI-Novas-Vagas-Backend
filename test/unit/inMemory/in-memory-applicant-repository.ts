@@ -8,10 +8,17 @@ export class InMemoryApplicantRepository implements ApplicantRepository {
     private applicants: ApplicantInformation[] = [];
 
     async createAnApplicant(applicantData: CreateApplicantDTO): Promise<Applicant> {
-        const newApplicant = {
+        const { name, email, password } = applicantData;
+
+        const newApplicant: ApplicantInformation = {
             id: this.id,
             user_id: this.id,
             ...applicantData,
+            user: {
+                name,
+                email,
+                password,
+            },
         };
 
         this.applicants.push(newApplicant);

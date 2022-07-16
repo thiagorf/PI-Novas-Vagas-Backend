@@ -9,7 +9,7 @@ export class CreateApplicantUseCase {
         const emailIsAlreadyRegistred = await this.applicantRepository.getApplicantBy(applicantData.email);
 
         if (emailIsAlreadyRegistred) {
-            throw new Error("Email is already been used");
+            throw new Error("Email invalid or is already been used");
         }
 
         const hashedPassword = await hash(applicantData.password, 10);

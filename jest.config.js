@@ -114,6 +114,11 @@ module.exports = {
             preset: "ts-jest",
             testMatch: ["<rootDir>/test/**/users/enterprises/*.ts"],
         },
+        {
+            displayName: "Applicant Module",
+            preset: "ts-jest",
+            testMatch: ["<rootDir>/test/**/users/applicants/*.ts"],
+        },
     ],
 
     // Use this configuration option to add custom reporters to Jest
