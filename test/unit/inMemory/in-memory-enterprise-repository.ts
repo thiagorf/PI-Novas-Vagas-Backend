@@ -23,9 +23,13 @@ export class InMemoryEnterpriseRepository implements EnterpriseRepository {
 
         return enterprise;
     }
-    getEnterpriseByUserId(user_id: number): Promise<Enterprise> {
-        throw new Error("Method not implemented.");
+
+    async getEnterpriseByUserId(user_id: number): Promise<Enterprise> {
+        const enterprise = this.enterprise.find((enterprise) => enterprise.user_id === user_id);
+
+        return enterprise;
     }
+
     getJobs(id: number): Promise<any> {
         throw new Error("Method not implemented.");
     }

@@ -26,6 +26,6 @@ describe("Create Job Test", () => {
 
         const sut = await createJobUseCase.perform({ ...jobsBuilder, user_id: enterpriseData.user_id });
 
-        expect(sut).toMatchObject({ ...jobsBuilder, user_id: enterpriseData.id });
+        expect(sut).toMatchObject(jobsBuilder);
     });
 });
