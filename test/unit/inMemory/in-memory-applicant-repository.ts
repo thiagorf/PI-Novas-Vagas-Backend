@@ -1,4 +1,5 @@
 import { Applicant } from "@prisma/client";
+import { ApplicantAllJobs, ApplicantJobs } from "../../../src/modules/users/core/entity/Applicants";
 import { CreateApplicantDTO } from "../../../src/modules/users/core/useCases/applicants/createApplicant/create-applicant-dto";
 import { ApplicantRepository } from "../../../src/modules/users/infra/repositories/applicant-repository";
 import { ApplicantInformation } from "../helpers/user-types";
@@ -6,6 +7,11 @@ import { ApplicantInformation } from "../helpers/user-types";
 export class InMemoryApplicantRepository implements ApplicantRepository {
     private id = 0;
     private applicants: ApplicantInformation[] = [];
+    private jobs: ApplicantJobs[] = [];
+
+    public populateJobs(jobs: ApplicantJobs) {
+        this.jobs.push(jobs);
+    }
 
     async createAnApplicant(applicantData: CreateApplicantDTO): Promise<Applicant> {
         const { name, email, password } = applicantData;
@@ -44,8 +50,20 @@ export class InMemoryApplicantRepository implements ApplicantRepository {
         return applicant;
     }
 
-    async getApplicantJobs(user_id: number): Promise<any> {
-        const applicantJobs = this.applicants.find((applicant) => applicant.user_id === user_id);
+    async getApplicantJobs(user_id: number): Promise<ApplicantAllJobs> {
+        const applicant = this.applicants.find((applicant) => applicant.user_id === user_id);
+
+        const {
+            id,
+            user: { name, email },
+        } = applicant;
+
+        const applicantJobs: ApplicantAllJobs = {
+            id,
+            name,
+            email,
+            jobs: this.jobs,
+        };
 
         return applicantJobs;
     }

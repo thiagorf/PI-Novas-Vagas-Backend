@@ -1,4 +1,3 @@
-import { ApplicantForJobs } from "@prisma/client";
 import { Jobs } from "../../../src/modules/jobs/core/entity/Jobs";
 import { Apply } from "../../../src/modules/users/core/entity/Apply";
 import { ApplyRepository } from "../../../src/modules/users/infra/repositories/apply-repository";
@@ -20,7 +19,7 @@ export class InMemoryApplyRepository implements ApplyRepository {
             created_at: new Date(),
         };
 
-        const apply = this.applies.push(newApply);
+        this.applies.push(newApply);
 
         return newApply;
     }
