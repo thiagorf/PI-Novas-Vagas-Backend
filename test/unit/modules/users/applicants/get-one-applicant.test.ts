@@ -25,4 +25,12 @@ describe("Get One Applicant", () => {
 
         expect(sut).toMatchObject(applicantBuilder);
     });
+
+    it("Should not be able to get an inexisting Applicant", () => {
+        const { getOneApplicant } = prepareUseCase();
+
+        expect(async () => {
+            await getOneApplicant.perform(0);
+        }).rejects.toThrowError("Invalid or inexisting applicant");
+    });
 });

@@ -36,8 +36,48 @@ describe("Get Jobs For Applicant", () => {
 
         await inMemoryApplyRepository.apply(applicant.id, job.id);
 
-        const sut = await getJobsForApplicant.perform(applicant.id, job.id);
+        //Hard code authenticated id
+        const sut = await getJobsForApplicant.perform(applicant.id, 0);
 
         expect(sut.jobs).toHaveLength(1);
+    });
+
+    it("Should not be able to get jobs for an inexisting applicant", () => {
+        const { getJobsForApplicant } = prepareUseCase();
+
+        const invalidApplicantId = 1;
+        const authenticatedId = 0;
+
+        expect(async () => {
+            await getJobsForApplicant.perform(invalidApplicantId, authenticatedId);
+        }).rejects.toThrowError("Invalid applicant.");
+    });
+
+    it("Should not be able to get jobs for an unauthorized user", async () => {
+        const { getJobsForApplicant, inMemoryJobsRepository, inMemoryApplyRepository, inMemoryApplicantRepository } =
+            prepareUseCase();
+
+        const userBuilder = UsersBuilder.aUser().withEnterpriseInfo().build();
+        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
+        const jobsBuilder = JobsBuilder.aJob().build();
+
+        const applicant = await inMemoryApplicantRepository.createAnApplicant({ ...userBuilder, ...applicantBuilder });
+        const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
+
+        inMemoryApplicantRepository.populateJobs({
+            ...job,
+            enterprise: {
+                name: "SoftwareX",
+            },
+        });
+
+        await inMemoryApplyRepository.apply(applicant.id, job.id);
+
+        const invalidApplicantId = 1;
+        const authenticatedId = 0;
+        //Hard code applicant id
+        expect(async () => {
+            await getJobsForApplicant.perform(invalidApplicantId, authenticatedId);
+        }).rejects.toThrowError("unauthorized.");
     });
 });
