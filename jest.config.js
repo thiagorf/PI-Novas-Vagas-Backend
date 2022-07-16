@@ -19,9 +19,7 @@ module.exports = {
     // coverageDirectory: undefined,
 
     // An array of regexp pattern strings used to skip coverage collection
-    // coveragePathIgnorePatterns: [
-    //   "/node_modules/"
-    // ],
+    coveragePathIgnorePatterns: ["/node_modules/", "index.ts", "/entity/*"],
 
     // Indicates which provider should be used to instrument code for coverage
     coverageProvider: "v8",
@@ -103,23 +101,6 @@ module.exports = {
     preset: "ts-jest",
 
     // Run tests from one or more projects
-    projects: [
-        {
-            displayName: "Jobs Module",
-            preset: "ts-jest",
-            testMatch: ["<rootDir>/test/**/jobs/*.ts"],
-        },
-        {
-            displayName: "Enterprise Module",
-            preset: "ts-jest",
-            testMatch: ["<rootDir>/test/**/users/enterprises/*.ts"],
-        },
-        {
-            displayName: "Applicant Module",
-            preset: "ts-jest",
-            testMatch: ["<rootDir>/test/**/users/applicants/*.ts"],
-        },
-    ],
 
     // Use this configuration option to add custom reporters to Jest
     // reporters: undefined,
