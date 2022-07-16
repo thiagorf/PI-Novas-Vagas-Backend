@@ -7,7 +7,7 @@ const prepareUseCase = () => {
     const inMemoryEnterpriseRepository = new InMemoryEnterpriseRepository();
     const createEnterprise = new CreateEnterpriseUseCase(inMemoryEnterpriseRepository);
 
-    return { createEnterprise };
+    return { createEnterprise, inMemoryEnterpriseRepository };
 };
 
 describe("Create Enterprise", () => {
@@ -20,5 +20,20 @@ describe("Create Enterprise", () => {
         const sut = await createEnterprise.perform({ ...userData, ...enterpriseData });
 
         expect(sut).toMatchObject(enterpriseData);
+    });
+
+    it("Should not be able to create an enterprise with a existing cnpj", async () => {
+        const { createEnterprise, inMemoryEnterpriseRepository } = prepareUseCase();
+
+        const userData = UsersBuilder.aUser().withEnterpriseInfo().build();
+        const enterpriseData = EnterpriseBuilder.aEnterprise().build();
+
+        const enterpriseRequiredInfo = { ...userData, ...enterpriseData };
+
+        await inMemoryEnterpriseRepository.createAnEnterprise(enterpriseRequiredInfo);
+
+        expect(async () => {
+            await createEnterprise.perform(enterpriseRequiredInfo);
+        }).rejects.toThrowError("Enterprise already exists.");
     });
 });
