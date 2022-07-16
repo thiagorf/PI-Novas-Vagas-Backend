@@ -16,6 +16,12 @@ export class EnterpriseBuilder {
         return new EnterpriseBuilder();
     }
 
+    public withUserId(user_id: number) {
+        this.enterprises.user_id = user_id;
+
+        return this;
+    }
+
     public build() {
         return this.enterprises;
     }
