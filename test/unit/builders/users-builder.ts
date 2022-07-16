@@ -25,6 +25,12 @@ export class UsersBuilder {
         return this;
     }
 
+    public withAnotherEmail() {
+        this.users.email = "doe@gmail.com";
+
+        return this;
+    }
+
     public build() {
         return this.users;
     }

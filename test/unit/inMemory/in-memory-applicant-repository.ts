@@ -21,6 +21,8 @@ export class InMemoryApplicantRepository implements ApplicantRepository {
             },
         };
 
+        this.id++;
+
         this.applicants.push(newApplicant);
 
         return newApplicant;
