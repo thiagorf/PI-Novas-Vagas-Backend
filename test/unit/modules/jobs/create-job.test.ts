@@ -28,4 +28,14 @@ describe("Create Job Test", () => {
 
         expect(sut).toMatchObject(jobsBuilder);
     });
+
+    it("Should not be able to create a job for an invalid enterprise", async () => {
+        const { createJobUseCase } = prepareUseCase();
+
+        const jobsBuilder = JobsBuilder.aJob().build();
+
+        expect(async () => {
+            await createJobUseCase.perform({ ...jobsBuilder, user_id: 0 });
+        }).rejects.toThrowError("Invalid enterprise");
+    });
 });
