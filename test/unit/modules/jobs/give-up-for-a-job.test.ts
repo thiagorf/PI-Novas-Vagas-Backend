@@ -44,9 +44,11 @@ describe("Give Up For A Job", () => {
 
     it("Should not be able to give up with an invalid user", () => {
         const { giveUpForAJob } = prepareUseCase();
+        const invalidUserId = 0;
+        const randomJobId = 0;
 
         expect(async () => {
-            await giveUpForAJob.perform({ user_id: 0, jobs_id: 0 });
+            await giveUpForAJob.perform({ user_id: invalidUserId, jobs_id: randomJobId });
         }).rejects.toThrowError("Invalid applicant");
     });
 
@@ -73,8 +75,7 @@ describe("Give Up For A Job", () => {
     });
 
     it("Should not be able to give up a job that is not applied", async () => {
-        const { giveUpForAJob, inMemoryApplicantRepository, inMemoryJobsRepository, inMemoryApplyRepository } =
-            prepareUseCase();
+        const { giveUpForAJob, inMemoryApplicantRepository, inMemoryJobsRepository } = prepareUseCase();
 
         const userBuilder = UsersBuilder.aUser().build();
         const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();

@@ -42,13 +42,18 @@ describe("Apply For A Job", () => {
     it("Should not be able to apply to a job with an invalid applicant", () => {
         const { applyForAJob } = prepareUseCase();
 
+        const invalidUserId = 0;
+        const randomJobId = 0;
+
         expect(async () => {
-            await applyForAJob.perform({ jobs_id: 0, user_id: 0 });
+            await applyForAJob.perform({ jobs_id: randomJobId, user_id: invalidUserId });
         }).rejects.toThrowError("Invalid applicant");
     });
 
     it("Should not be able to apply to a job with an invalid job", async () => {
         const { applyForAJob, inMemoryApplicantRepository } = prepareUseCase();
+
+        const invalidJobId = 0;
 
         const userBuilder = UsersBuilder.aUser().build();
         const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
@@ -58,7 +63,7 @@ describe("Apply For A Job", () => {
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
 
         expect(async () => {
-            await applyForAJob.perform({ user_id: applicant.user_id, jobs_id: 0 });
+            await applyForAJob.perform({ user_id: applicant.user_id, jobs_id: invalidJobId });
         }).rejects.toThrowError("Invalid job.");
     });
 
