@@ -15,16 +15,24 @@ const prepareUseCase = () => {
     return { getJobsForApplicant, inMemoryApplicantRepository, inMemoryApplyRepository, inMemoryJobsRepository };
 };
 
+const prepareData = () => {
+    const userBuilder = UsersBuilder.aUser().withEnterpriseInfo().build();
+    const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
+    const jobsBuilder = JobsBuilder.aJob().build();
+
+    const applicantData = { ...userBuilder, ...applicantBuilder };
+
+    return { applicantData, jobsBuilder };
+};
+
 describe("Get Jobs For Applicant", () => {
     it("Should be able to get jobs for an applicant", async () => {
         const { getJobsForApplicant, inMemoryJobsRepository, inMemoryApplyRepository, inMemoryApplicantRepository } =
             prepareUseCase();
+        const { applicantData, jobsBuilder } = prepareData();
+        const authenticatedId = 0;
 
-        const userBuilder = UsersBuilder.aUser().withEnterpriseInfo().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-        const jobsBuilder = JobsBuilder.aJob().build();
-
-        const applicant = await inMemoryApplicantRepository.createAnApplicant({ ...userBuilder, ...applicantBuilder });
+        const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
 
         inMemoryApplicantRepository.populateJobs({
@@ -37,7 +45,7 @@ describe("Get Jobs For Applicant", () => {
         await inMemoryApplyRepository.apply(applicant.id, job.id);
 
         //Hard code authenticated id
-        const sut = await getJobsForApplicant.perform(applicant.id, 0);
+        const sut = await getJobsForApplicant.perform(applicant.id, authenticatedId);
 
         expect(sut.jobs).toHaveLength(1);
     });
@@ -56,12 +64,9 @@ describe("Get Jobs For Applicant", () => {
     it("Should not be able to get jobs for an unauthorized user", async () => {
         const { getJobsForApplicant, inMemoryJobsRepository, inMemoryApplyRepository, inMemoryApplicantRepository } =
             prepareUseCase();
+        const { applicantData, jobsBuilder } = prepareData();
 
-        const userBuilder = UsersBuilder.aUser().withEnterpriseInfo().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-        const jobsBuilder = JobsBuilder.aJob().build();
-
-        const applicant = await inMemoryApplicantRepository.createAnApplicant({ ...userBuilder, ...applicantBuilder });
+        const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
 
         inMemoryApplicantRepository.populateJobs({
