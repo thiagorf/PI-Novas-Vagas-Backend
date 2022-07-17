@@ -20,15 +20,20 @@ const prepareUseCase = () => {
     return { applyForAJob, inMemoryApplicantRepository, inMemoryJobsRepository, inMemoryApplyRepository };
 };
 
+const prepareData = () => {
+    const userBuilder = UsersBuilder.aUser().build();
+    const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
+    const jobsBuilder = JobsBuilder.aJob().build();
+
+    const applicantData = { ...userBuilder, ...applicantBuilder };
+
+    return { applicantData, jobsBuilder };
+};
+
 describe("Apply For A Job", () => {
     it("Should be able to apply to a job", async () => {
         const { applyForAJob, inMemoryApplicantRepository, inMemoryJobsRepository } = prepareUseCase();
-
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-        const jobsBuilder = JobsBuilder.aJob().build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
+        const { applicantData, jobsBuilder } = prepareData();
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
@@ -52,13 +57,9 @@ describe("Apply For A Job", () => {
 
     it("Should not be able to apply to a job with an invalid job", async () => {
         const { applyForAJob, inMemoryApplicantRepository } = prepareUseCase();
+        const { applicantData } = prepareData();
 
         const invalidJobId = 0;
-
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
 
@@ -71,11 +72,7 @@ describe("Apply For A Job", () => {
         const { applyForAJob, inMemoryApplicantRepository, inMemoryApplyRepository, inMemoryJobsRepository } =
             prepareUseCase();
 
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-        const jobsBuilder = JobsBuilder.aJob().build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
+        const { applicantData, jobsBuilder } = prepareData();
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
