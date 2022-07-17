@@ -10,14 +10,19 @@ const prepareUseCase = () => {
     return { createApplicant, inMemoryApplicantRepository };
 };
 
+const prepareData = () => {
+    const userBuilder = UsersBuilder.aUser().build();
+    const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
+
+    const applicantData = { ...userBuilder, ...applicantBuilder };
+
+    return { applicantData, applicantBuilder };
+};
+
 describe("Create Applicant", () => {
     it("Should be able to create an applicant", async () => {
         const { createApplicant } = prepareUseCase();
-
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
+        const { applicantData, applicantBuilder } = prepareData();
 
         const sut = await createApplicant.perform(applicantData);
 
@@ -26,11 +31,7 @@ describe("Create Applicant", () => {
 
     it("Should not be able to create an applicant with the same email", async () => {
         const { createApplicant, inMemoryApplicantRepository } = prepareUseCase();
-
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
+        const { applicantData } = prepareData();
 
         await inMemoryApplicantRepository.createAnApplicant(applicantData);
 
