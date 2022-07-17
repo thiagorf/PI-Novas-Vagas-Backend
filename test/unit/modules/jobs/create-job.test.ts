@@ -13,16 +13,22 @@ const prepareUseCase = () => {
     return { createJobUseCase, inMemoryEnterpriseRepository };
 };
 
+const prepareData = () => {
+    const userBuilder = UsersBuilder.aUser().withEnterpriseInfo().build();
+    const enterpriseBuilder = EnterpriseBuilder.aEnterprise().withUserId(userBuilder.id).build();
+    const jobsBuilder = JobsBuilder.aJob().withEnterpriseId(enterpriseBuilder.id).build();
+
+    const enterpriseData = { ...userBuilder, ...enterpriseBuilder };
+
+    return { enterpriseData, jobsBuilder };
+};
+
 describe("Create Job Test", () => {
     it("Should be able to create a new job", async () => {
         const { createJobUseCase, inMemoryEnterpriseRepository } = prepareUseCase();
+        const { enterpriseData, jobsBuilder } = prepareData();
 
-        const userBuilder = UsersBuilder.aUser().withEnterpriseInfo().build();
-        const enterpriseData = EnterpriseBuilder.aEnterprise().withUserId(userBuilder.id).build();
-
-        await inMemoryEnterpriseRepository.createAnEnterprise({ ...userBuilder, ...enterpriseData });
-
-        const jobsBuilder = JobsBuilder.aJob().withEnterpriseId(enterpriseData.id).build();
+        await inMemoryEnterpriseRepository.createAnEnterprise(enterpriseData);
 
         const sut = await createJobUseCase.perform({ ...jobsBuilder, user_id: enterpriseData.user_id });
 
