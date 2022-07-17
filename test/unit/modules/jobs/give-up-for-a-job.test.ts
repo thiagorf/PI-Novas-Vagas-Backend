@@ -20,16 +20,21 @@ const prepareUseCase = () => {
     return { giveUpForAJob, inMemoryApplicantRepository, inMemoryJobsRepository, inMemoryApplyRepository };
 };
 
+const prepareData = () => {
+    const userBuilder = UsersBuilder.aUser().build();
+    const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
+    const jobsBuilder = JobsBuilder.aJob().build();
+
+    const applicantData = { ...userBuilder, ...applicantBuilder };
+
+    return { applicantData, jobsBuilder };
+};
+
 describe("Give Up For A Job", () => {
     it("Should be able to give up for a job", async () => {
         const { giveUpForAJob, inMemoryApplicantRepository, inMemoryJobsRepository, inMemoryApplyRepository } =
             prepareUseCase();
-
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-        const jobsBuilder = JobsBuilder.aJob().build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
+        const { applicantData, jobsBuilder } = prepareData();
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
@@ -55,14 +60,8 @@ describe("Give Up For A Job", () => {
     it("Should not be able to give up with a invalid job", async () => {
         const { giveUpForAJob, inMemoryApplicantRepository, inMemoryJobsRepository, inMemoryApplyRepository } =
             prepareUseCase();
-
+        const { applicantData, jobsBuilder } = prepareData();
         const invalidJobId = 1;
-
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-        const jobsBuilder = JobsBuilder.aJob().build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
@@ -76,12 +75,7 @@ describe("Give Up For A Job", () => {
 
     it("Should not be able to give up a job that is not applied", async () => {
         const { giveUpForAJob, inMemoryApplicantRepository, inMemoryJobsRepository } = prepareUseCase();
-
-        const userBuilder = UsersBuilder.aUser().build();
-        const applicantBuilder = ApplicantBuilder.aApplicant().withUserId(userBuilder.id).build();
-        const jobsBuilder = JobsBuilder.aJob().build();
-
-        const applicantData = { ...userBuilder, ...applicantBuilder };
+        const { applicantData, jobsBuilder } = prepareData();
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
