@@ -10,30 +10,34 @@ const prepareUseCase = () => {
     return { createEnterprise, inMemoryEnterpriseRepository };
 };
 
+const prepareData = () => {
+    const userBuilder = UsersBuilder.aUser().withEnterpriseInfo().build();
+    const enterpriseBuilder = EnterpriseBuilder.aEnterprise().withUserId(userBuilder.id).build();
+
+    const enterpriseData = { ...userBuilder, ...enterpriseBuilder };
+
+    return { enterpriseData };
+};
+
 describe("Create Enterprise", () => {
     it("Should be able to create an enterprise", async () => {
         const { createEnterprise } = prepareUseCase();
+        const { enterpriseData } = prepareData();
+        const { id, cep, cnpj, user_id, segment } = enterpriseData;
 
-        const userData = UsersBuilder.aUser().withEnterpriseInfo().build();
-        const enterpriseData = EnterpriseBuilder.aEnterprise().build();
+        const sut = await createEnterprise.perform(enterpriseData);
 
-        const sut = await createEnterprise.perform({ ...userData, ...enterpriseData });
-
-        expect(sut).toMatchObject(enterpriseData);
+        expect(sut).toMatchObject({ id, cep, cnpj, user_id, segment });
     });
 
     it("Should not be able to create an enterprise with a existing cnpj", async () => {
         const { createEnterprise, inMemoryEnterpriseRepository } = prepareUseCase();
+        const { enterpriseData } = prepareData();
 
-        const userData = UsersBuilder.aUser().withEnterpriseInfo().build();
-        const enterpriseData = EnterpriseBuilder.aEnterprise().build();
-
-        const enterpriseRequiredInfo = { ...userData, ...enterpriseData };
-
-        await inMemoryEnterpriseRepository.createAnEnterprise(enterpriseRequiredInfo);
+        await inMemoryEnterpriseRepository.createAnEnterprise(enterpriseData);
 
         expect(async () => {
-            await createEnterprise.perform(enterpriseRequiredInfo);
+            await createEnterprise.perform(enterpriseData);
         }).rejects.toThrowError("Enterprise already exists.");
     });
 });

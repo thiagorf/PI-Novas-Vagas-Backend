@@ -18,7 +18,7 @@ export class InMemoryEnterpriseRepository implements EnterpriseRepository {
     }
 
     async createAnEnterprise(dto: CreateEnterpriseDTO): Promise<Enterprise> {
-        const { email, name, password } = dto;
+        const { email, name, password, cep, cnpj, segment } = dto;
 
         const enterprise: EnterpriseInformation = {
             id: this.id,
@@ -32,9 +32,13 @@ export class InMemoryEnterpriseRepository implements EnterpriseRepository {
             },
         };
 
+        const realResponse: Enterprise = { id: this.id, user_id: this.id, cep, segment, cnpj };
+
+        this.id++;
+
         this.enterprise.push(enterprise);
 
-        return enterprise;
+        return realResponse;
     }
 
     async getEterpriseBy(cnpj: string): Promise<Enterprise> {
