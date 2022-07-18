@@ -8,6 +8,7 @@
         "start": "node build/infra/app.js",
         "build": "rimraf ./build && tsc",
         "test": "jest",
+        "test:unit": "jest unit",
         "test:coverage": "jest --coverage",
         "lint": "eslint src/**/*.ts",
         "format": "eslint src/**/*.ts --fix",

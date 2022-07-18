@@ -7,7 +7,7 @@ export class DeleteJobUseCase {
         const jobExists = await this.jobRepository.getOneJob(jobId);
 
         if (!jobExists) {
-            throw new Error("Invalid job or inexisting.");
+            throw new Error("Invalid job or inexisting");
         }
 
         const result = await this.jobRepository.deleteAJob(jobId);
