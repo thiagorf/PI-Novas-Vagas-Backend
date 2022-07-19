@@ -53,7 +53,7 @@ export class InMemoryEnterpriseRepository implements EnterpriseRepository {
         return enterprise;
     }
 
-    async getJobs(id: number): Promise<any> {
+    async getJobs(id: number): Promise<EnterpriseAllJobs> {
         const enterprise = this.enterprise.find((enterprise) => enterprise.id === id);
 
         const { id: enterprise_id, cep, cnpj, segment, user_id } = enterprise;
@@ -84,13 +84,8 @@ export class InMemoryEnterpriseRepository implements EnterpriseRepository {
 
     // TODO TEST
     async getOneJobForEnterprise(enterprise_id: number, job_id: number): Promise<any> {
-        const job = this.jobs.find((job) => job.id === job_id);
+        const jobIndex = this.jobs.findIndex((job) => job.id === job_id && enterprise_id === job.enterprise_id);
 
-        const enterpriseOneJob: JobsApplicants = {
-            ...job,
-            applicants: [],
-        };
-
-        return enterpriseOneJob;
+        return this.jobsWithApplicants;
     }
 }

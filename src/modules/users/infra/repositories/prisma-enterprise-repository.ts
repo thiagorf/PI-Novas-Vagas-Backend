@@ -1,5 +1,6 @@
+import { JobsApplicants } from "../../../../../test/unit/helpers/user-types";
 import prisma from "../../../../infra/database/prisma";
-import { Enterprise } from "../../core/entity/Enterprises";
+import { Enterprise, EnterpriseAllJobs } from "../../core/entity/Enterprises";
 import { CreateEnterpriseDTO } from "../../core/useCases/enterprises/createEnterprise/create-enterprise-dto";
 import { EnterpriseRepository } from "./enterprise-repository";
 
@@ -68,7 +69,7 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
         return enterprise;
     }
 
-    async getJobs(id: number): Promise<any> {
+    async getJobs(id: number): Promise<EnterpriseAllJobs> {
         const enterpriseJobs = await prisma.enterprise.findUnique({
             where: {
                 id,
@@ -122,7 +123,7 @@ export class PrismaEnterpriseRepository implements EnterpriseRepository {
         return enterprise;
     }
 
-    async getOneJobForEnterprise(enterprise_id: number, job_id: number): Promise<any> {
+    async getOneJobForEnterprise(enterprise_id: number, job_id: number): Promise<JobsApplicants> {
         const enterpriseOneJob = await prisma.enterprise.findUnique({
             where: {
                 id: enterprise_id,
