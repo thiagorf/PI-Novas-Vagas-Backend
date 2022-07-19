@@ -2,7 +2,6 @@ import { Router } from "express";
 import { checkAuthEnterpriseMiddleware } from "../../../../infra/middlewares/check-auth-enterprise-middleware";
 import {
     createEnterpriseController,
-    enterpriseAuthController,
     getJobsForEnterpriseController,
     getOneEnterpriseController,
 } from "../../core/useCases/enterprises";
@@ -11,7 +10,6 @@ import { getOneJobForEnterpriseControoler } from "../../core/useCases/enterprise
 const enterpriseRoutes = Router();
 
 enterpriseRoutes.post("/", createEnterpriseController.handle);
-enterpriseRoutes.post("/login", enterpriseAuthController.handle);
 enterpriseRoutes.get("/:id/jobs", getJobsForEnterpriseController.handle);
 enterpriseRoutes.get("/:id", getOneEnterpriseController.handle);
 enterpriseRoutes.get(
