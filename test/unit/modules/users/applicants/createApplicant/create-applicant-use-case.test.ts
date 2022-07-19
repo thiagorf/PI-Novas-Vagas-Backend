@@ -1,7 +1,7 @@
-import { CreateApplicantUseCase } from "../../../../../src/modules/users/core/useCases/applicants/createApplicant/create-applicant-use-case";
-import { ApplicantBuilder } from "../../../builders/applicant-builder";
-import { UsersBuilder } from "../../../builders/users-builder";
-import { InMemoryApplicantRepository } from "../../../inMemory/in-memory-applicant-repository";
+import { CreateApplicantUseCase } from "../../../../../../src/modules/users/core/useCases/applicants/createApplicant/create-applicant-use-case";
+import { ApplicantBuilder } from "../../../../builders/applicant-builder";
+import { UsersBuilder } from "../../../../builders/users-builder";
+import { InMemoryApplicantRepository } from "../../../../inMemory/in-memory-applicant-repository";
 
 const prepareUseCase = () => {
     const inMemoryApplicantRepository = new InMemoryApplicantRepository();

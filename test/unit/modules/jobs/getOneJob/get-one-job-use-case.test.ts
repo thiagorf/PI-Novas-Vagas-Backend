@@ -1,6 +1,6 @@
-import { GetOneJobUseCase } from "../../../../src/modules/jobs/core/useCases/getOneJob/get-one-job-use-case";
-import { JobsBuilder } from "../../builders/jobs-builder";
-import { InMemoryJobsRepository } from "../../inMemory/in-memory-jobs-repository";
+import { GetOneJobUseCase } from "../../../../../src/modules/jobs/core/useCases/getOneJob/get-one-job-use-case";
+import { JobsBuilder } from "../../../builders/jobs-builder";
+import { InMemoryJobsRepository } from "../../../inMemory/in-memory-jobs-repository";
 
 const prepareUseCase = () => {
     const inMemoryJobsRepository = new InMemoryJobsRepository();

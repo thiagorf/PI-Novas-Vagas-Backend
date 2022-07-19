@@ -1,7 +1,7 @@
-import { CreateEnterpriseUseCase } from "../../../../../src/modules/users/core/useCases/enterprises/createEnterprise/create-enterprise-use-case";
-import { EnterpriseBuilder } from "../../../builders/enterprise-builder";
-import { UsersBuilder } from "../../../builders/users-builder";
-import { InMemoryEnterpriseRepository } from "../../../inMemory/in-memory-enterprise-repository";
+import { CreateEnterpriseUseCase } from "../../../../../../src/modules/users/core/useCases/enterprises/createEnterprise/create-enterprise-use-case";
+import { EnterpriseBuilder } from "../../../../builders/enterprise-builder";
+import { UsersBuilder } from "../../../../builders/users-builder";
+import { InMemoryEnterpriseRepository } from "../../../../inMemory/in-memory-enterprise-repository";
 
 const prepareUseCase = () => {
     const inMemoryEnterpriseRepository = new InMemoryEnterpriseRepository();

@@ -1,6 +1,6 @@
-import { DeleteJobUseCase } from "../../../../src/modules/jobs/core/useCases/deleteJob/delete-job-use-case";
-import { JobsBuilder } from "../../builders/jobs-builder";
-import { InMemoryJobsRepository } from "../../inMemory/in-memory-jobs-repository";
+import { DeleteJobUseCase } from "../../../../../src/modules/jobs/core/useCases/deleteJob/delete-job-use-case";
+import { JobsBuilder } from "../../../builders/jobs-builder";
+import { InMemoryJobsRepository } from "../../../inMemory/in-memory-jobs-repository";
 
 const prepareUseCase = () => {
     const inMemoryJobsRepository = new InMemoryJobsRepository();

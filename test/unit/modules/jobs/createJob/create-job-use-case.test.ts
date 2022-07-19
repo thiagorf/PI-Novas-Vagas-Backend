@@ -1,9 +1,9 @@
-import { CreateJobUseCase } from "../../../../src/modules/jobs/core/useCases/createJob/create-job-use-case";
-import { EnterpriseBuilder } from "../../builders/enterprise-builder";
-import { JobsBuilder } from "../../builders/jobs-builder";
-import { UsersBuilder } from "../../builders/users-builder";
-import { InMemoryEnterpriseRepository } from "../../inMemory/in-memory-enterprise-repository";
-import { InMemoryJobsRepository } from "../../inMemory/in-memory-jobs-repository";
+import { CreateJobUseCase } from "../../../../../src/modules/jobs/core/useCases/createJob/create-job-use-case";
+import { EnterpriseBuilder } from "../../../builders/enterprise-builder";
+import { JobsBuilder } from "../../../builders/jobs-builder";
+import { UsersBuilder } from "../../../builders/users-builder";
+import { InMemoryEnterpriseRepository } from "../../../inMemory/in-memory-enterprise-repository";
+import { InMemoryJobsRepository } from "../../../inMemory/in-memory-jobs-repository";
 
 const prepareUseCase = () => {
     const inMemoryJobsRepository = new InMemoryJobsRepository();

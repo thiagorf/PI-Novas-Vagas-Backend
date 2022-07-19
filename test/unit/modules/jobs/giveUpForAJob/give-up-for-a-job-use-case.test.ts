@@ -1,10 +1,10 @@
-import { GiveUpForAJobUseCase } from "../../../../src/modules/jobs/core/useCases/giveUpForAJob/give-up-for-a-job-use-case";
-import { ApplicantBuilder } from "../../builders/applicant-builder";
-import { JobsBuilder } from "../../builders/jobs-builder";
-import { UsersBuilder } from "../../builders/users-builder";
-import { InMemoryApplicantRepository } from "../../inMemory/in-memory-applicant-repository";
-import { InMemoryApplyRepository } from "../../inMemory/in-memory-apply-repository";
-import { InMemoryJobsRepository } from "../../inMemory/in-memory-jobs-repository";
+import { GiveUpForAJobUseCase } from "../../../../../src/modules/jobs/core/useCases/giveUpForAJob/give-up-for-a-job-use-case";
+import { ApplicantBuilder } from "../../../builders/applicant-builder";
+import { JobsBuilder } from "../../../builders/jobs-builder";
+import { UsersBuilder } from "../../../builders/users-builder";
+import { InMemoryApplicantRepository } from "../../../inMemory/in-memory-applicant-repository";
+import { InMemoryApplyRepository } from "../../../inMemory/in-memory-apply-repository";
+import { InMemoryJobsRepository } from "../../../inMemory/in-memory-jobs-repository";
 
 const prepareUseCase = () => {
     const inMemoryApplicantRepository = new InMemoryApplicantRepository();

@@ -1,5 +1,5 @@
-import { GetAllJobsUseCase } from "../../../../src/modules/jobs/core/useCases/getAllJobs/get-all-jobs-use-case";
-import { InMemoryJobsRepository } from "../../inMemory/in-memory-jobs-repository";
+import { GetAllJobsUseCase } from "../../../../../src/modules/jobs/core/useCases/getAllJobs/get-all-jobs-use-case";
+import { InMemoryJobsRepository } from "../../../inMemory/in-memory-jobs-repository";
 
 const prepareUseCase = () => {
     const inMemoryJobsRepository = new InMemoryJobsRepository();
