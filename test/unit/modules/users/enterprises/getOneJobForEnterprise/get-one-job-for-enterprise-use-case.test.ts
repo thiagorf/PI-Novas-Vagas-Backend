@@ -60,7 +60,6 @@ describe("Get One Job For Enterprise", () => {
             enterprise_id: enterpriseBuilder.id,
             job_id: jobsBuilder.id,
         });
-        console.log(sut);
 
         expect(sut.applicants).toHaveLength(2);
     });

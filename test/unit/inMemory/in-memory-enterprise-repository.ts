@@ -83,8 +83,8 @@ export class InMemoryEnterpriseRepository implements EnterpriseRepository {
     }
 
     // TODO TEST
-    async getOneJobForEnterprise(enterprise_id: number, job_id: number): Promise<any> {
-        const jobIndex = this.jobs.findIndex((job) => job.id === job_id && enterprise_id === job.enterprise_id);
+    async getOneJobForEnterprise(enterprise_id: number, job_id: number): Promise<JobsApplicants> {
+        this.jobs.findIndex((job) => job.id === job_id && enterprise_id === job.enterprise_id);
 
         return this.jobsWithApplicants;
     }
