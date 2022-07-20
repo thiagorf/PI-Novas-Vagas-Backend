@@ -64,6 +64,36 @@ describe("Get One Job For Enterprise", () => {
         expect(sut.applicants).toHaveLength(2);
     });
 
-    test.todo("Should not be able to get jobs for an invalid enteprise");
-    test.todo("Should not be able to get one job for an unauthorizated enterprise");
+    it("Should not be able to get jobs for an invalid enteprise", () => {
+        const { getOneJobForEnterprise } = prepareUseCase();
+        const invalidEnterpriseId = 0;
+        const authenticatedId = 0;
+        const jobId = 0;
+
+        expect(async () => {
+            await getOneJobForEnterprise.perform({
+                authenticated_id: authenticatedId,
+                enterprise_id: invalidEnterpriseId,
+                job_id: jobId,
+            });
+        });
+    });
+
+    it("Should not be able to get one job for an unauthorizated enterprise", async () => {
+        const { getOneJobForEnterprise, inMemoryEnterpriseRepository } = prepareUseCase();
+        const { enterpriseData } = prepareData();
+
+        const invalidAuthenticatedId = 1;
+        const randomJobId = 1;
+
+        await inMemoryEnterpriseRepository.createAnEnterprise(enterpriseData);
+
+        expect(async () => {
+            await getOneJobForEnterprise.perform({
+                authenticated_id: invalidAuthenticatedId,
+                enterprise_id: enterpriseData.id,
+                job_id: randomJobId,
+            });
+        });
+    });
 });
