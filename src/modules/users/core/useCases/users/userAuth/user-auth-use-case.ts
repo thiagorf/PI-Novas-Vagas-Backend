@@ -1,10 +1,10 @@
-import { compare } from "bcrypt";
-import { ApplicantRepository } from "../../../../infra/repositories/applicant-repository";
-import { EnterpriseRepository } from "../../../../infra/repositories/enterprise-repository";
-import { UserRepository } from "../../../../infra/repositories/user-repository";
 import { AuthTokenService } from "../../../../infra/service/tokenAuth/auth-token-service";
-import { UserAuthDTO } from "./user-auth-dto";
+import { EnterpriseRepository } from "../../../../infra/repositories/enterprise-repository";
+import { ApplicantRepository } from "../../../../infra/repositories/applicant-repository";
+import { CryptoService } from "../../../../infra/service/crypto/crypto-service";
+import { UserRepository } from "../../../../infra/repositories/user-repository";
 import { AuthApplicant, AuthEnterprise } from "./user-types";
+import { UserAuthDTO } from "./user-auth-dto";
 
 export class UserAuthUseCase {
     constructor(
@@ -12,6 +12,7 @@ export class UserAuthUseCase {
         private applicantRepository: ApplicantRepository,
         private enterpriseRepository: EnterpriseRepository,
         private authService: AuthTokenService,
+        private crypto: CryptoService,
     ) {}
 
     async perform(dto: UserAuthDTO) {
@@ -20,8 +21,12 @@ export class UserAuthUseCase {
         if (!userExist) {
             throw new Error("User already exists.");
         }
+        console.log(dto);
 
-        const passwordIsOK = await compare(dto.password, userExist.password);
+        const passwordIsOK = await this.crypto.checkPassword({
+            providedPassword: dto.password,
+            hashedPassword: userExist.password,
+        });
 
         if (!passwordIsOK) {
             throw new Error("Invalid email or password.");
