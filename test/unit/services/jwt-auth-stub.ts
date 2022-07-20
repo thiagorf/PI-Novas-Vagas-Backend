@@ -2,11 +2,11 @@ import { AuthTokenService, TokenPayload } from "../../../src/modules/users/infra
 
 export class JwtAuthStub implements AuthTokenService {
     encode(payload: TokenPayload): string {
-        return payload + "ENCRYPTED";
+        return payload.sub + "ENCRYPTED";
     }
     decode(token: string): TokenPayload {
         return {
-            sub: Number(token),
+            sub: Number(token.substring(0, token.indexOf("ENCRYPTED"))),
         };
     }
 }

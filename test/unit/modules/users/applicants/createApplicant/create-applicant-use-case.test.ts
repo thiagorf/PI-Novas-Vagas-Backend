@@ -2,10 +2,12 @@ import { CreateApplicantUseCase } from "../../../../../../src/modules/users/core
 import { ApplicantBuilder } from "../../../../builders/applicant-builder";
 import { UsersBuilder } from "../../../../builders/users-builder";
 import { InMemoryApplicantRepository } from "../../../../inMemory/in-memory-applicant-repository";
+import { CryptoStub } from "../../../../services/crypto-stub";
 
 const prepareUseCase = () => {
     const inMemoryApplicantRepository = new InMemoryApplicantRepository();
-    const createApplicant = new CreateApplicantUseCase(inMemoryApplicantRepository);
+    const cryptoService = new CryptoStub();
+    const createApplicant = new CreateApplicantUseCase(inMemoryApplicantRepository, cryptoService);
 
     return { createApplicant, inMemoryApplicantRepository };
 };

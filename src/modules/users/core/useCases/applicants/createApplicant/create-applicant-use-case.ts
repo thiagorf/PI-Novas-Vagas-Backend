@@ -1,9 +1,9 @@
-import { hash } from "bcrypt";
 import { ApplicantRepository } from "../../../../infra/repositories/applicant-repository";
+import { CryptoService } from "../../../../infra/service/crypto/crypto-service";
 import { CreateApplicantDTO } from "./create-applicant-dto";
 
 export class CreateApplicantUseCase {
-    constructor(private applicantRepository: ApplicantRepository) {}
+    constructor(private applicantRepository: ApplicantRepository, private crypto: CryptoService) {}
 
     async perform(applicantData: CreateApplicantDTO) {
         const emailIsAlreadyRegistred = await this.applicantRepository.getApplicantBy(applicantData.email);
@@ -12,7 +12,7 @@ export class CreateApplicantUseCase {
             throw new Error("Email invalid or is already been used");
         }
 
-        const hashedPassword = await hash(applicantData.password, 10);
+        const hashedPassword = await this.crypto.hashPassword(applicantData.password);
 
         const result = await this.applicantRepository.createAnApplicant({ ...applicantData, password: hashedPassword });
 

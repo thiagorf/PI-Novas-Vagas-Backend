@@ -19,9 +19,8 @@ export class UserAuthUseCase {
         const userExist = await this.userRepository.getUserBy(dto.email);
 
         if (!userExist) {
-            throw new Error("User already exists.");
+            throw new Error("Invalid or inexisting user");
         }
-        console.log(dto);
 
         const passwordIsOK = await this.crypto.checkPassword({
             providedPassword: dto.password,

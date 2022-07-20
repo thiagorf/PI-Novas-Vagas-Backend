@@ -31,6 +31,12 @@ export class UsersBuilder {
         return this;
     }
 
+    public withHashedPassword() {
+        this.users.password += "Hash";
+
+        return this;
+    }
+
     public build() {
         return this.users;
     }

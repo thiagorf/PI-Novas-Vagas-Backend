@@ -45,14 +45,66 @@ describe("User Auth", () => {
         const { userAuth, inMemoryUserRepository, inMemoryApplicantRepository } = prepareUseCase();
         const { applicantData, userBuilder } = prepareData();
 
-        await inMemoryApplicantRepository.createAnApplicant(applicantData);
-        inMemoryUserRepository.populateUsers(userBuilder);
+        await inMemoryApplicantRepository.createAnApplicant({
+            ...applicantData,
+            password: applicantData.password + "HASH",
+        });
+        inMemoryUserRepository.populateUsers({ ...userBuilder, password: userBuilder.password + "HASH" });
 
         const sut = await userAuth.perform(userBuilder);
 
-        expect(sut).toEqual(userBuilder.id + "ENCRYPTED");
+        expect(sut.user).toMatchObject({ ...userBuilder, password: userBuilder.password + "HASH" });
+        expect(sut.token).toMatch(userBuilder.id + "ENCRYPTED");
+        expect(sut.user.type).toMatch("applicant");
     });
-    test.todo("Should be able to authenticate an user, when is it an enterprise");
-    test.todo("Should not be able to authenticate an invalid user");
-    test.todo("Should not be able to authenticate an user with a wrong password");
+
+    it("Should be able to authenticate an user, when is it an enterprise", async () => {
+        const { userAuth, inMemoryUserRepository, inMemoryEnterpriseRepository } = prepareUseCase();
+        const { enterpriseData, userWithEnterpriseInfo } = prepareData();
+
+        await inMemoryEnterpriseRepository.createAnEnterprise({
+            ...enterpriseData,
+            password: enterpriseData.password + "HASH",
+        });
+        inMemoryUserRepository.populateUsers({
+            ...userWithEnterpriseInfo,
+            password: userWithEnterpriseInfo.password + "HASH",
+        });
+
+        const sut = await userAuth.perform(userWithEnterpriseInfo);
+
+        expect(sut.user).toMatchObject({
+            ...userWithEnterpriseInfo,
+            password: userWithEnterpriseInfo.password + "HASH",
+        });
+        expect(sut.token).toMatch(userWithEnterpriseInfo.id + "ENCRYPTED");
+        expect(sut.user.type).toMatch("enterprise");
+    });
+
+    it("Should not be able to authenticate an invalid user", () => {
+        const { userAuth } = prepareUseCase();
+        const inexistingUserInfo = {
+            email: "randomemail@gmail.com",
+            password: "randompassword",
+        };
+
+        expect(async () => {
+            await userAuth.perform(inexistingUserInfo);
+        }).rejects.toThrowError("Invalid or inexisting user");
+    });
+
+    it("Should not be able to authenticate an user with a wrong password", async () => {
+        const { userAuth, inMemoryUserRepository, inMemoryApplicantRepository } = prepareUseCase();
+        const { applicantData, userBuilder } = prepareData();
+
+        await inMemoryApplicantRepository.createAnApplicant({
+            ...applicantData,
+            password: applicantData.password + "HASH",
+        });
+        inMemoryUserRepository.populateUsers(userBuilder);
+
+        expect(async () => {
+            await userAuth.perform(userBuilder);
+        }).rejects.toThrowError("Invalid email or password.");
+    });
 });

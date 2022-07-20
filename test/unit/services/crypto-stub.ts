@@ -7,9 +7,6 @@ export class CryptoStub implements CryptoService {
 
     async checkPassword({ hashedPassword, providedPassword }: CheckPasswordData): Promise<boolean> {
         const isPasswordOk = hashedPassword === providedPassword + "HASH";
-        console.log(isPasswordOk);
-        console.log(hashedPassword);
-        console.log(providedPassword);
 
         return isPasswordOk;
     }
