@@ -30,7 +30,7 @@ describe("Get Jobs For Applicant", () => {
         const { getJobsForApplicant, inMemoryJobsRepository, inMemoryApplyRepository, inMemoryApplicantRepository } =
             prepareUseCase();
         const { applicantData, jobsBuilder } = prepareData();
-        const authenticatedId = 0;
+        const authenticatedId = 1;
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
         const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
@@ -78,8 +78,8 @@ describe("Get Jobs For Applicant", () => {
 
         await inMemoryApplyRepository.apply(applicant.id, job.id);
 
-        const invalidApplicantId = 1;
-        const authenticatedId = 0;
+        const invalidApplicantId = 0;
+        const authenticatedId = 1;
         //Hard code applicant id
         expect(async () => {
             await getJobsForApplicant.perform(invalidApplicantId, authenticatedId);

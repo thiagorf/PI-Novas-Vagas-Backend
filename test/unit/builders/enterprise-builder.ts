@@ -5,7 +5,7 @@ import { UsersBuilder } from "./users-builder";
 export class EnterpriseBuilder {
     private user: Users = UsersBuilder.aUser().withEnterpriseInfo().build();
     private enterprises: Enterprise = {
-        id: 0,
+        id: 1,
         cep: 11111111,
         cnpj: "11111",
         segment: "credit card",

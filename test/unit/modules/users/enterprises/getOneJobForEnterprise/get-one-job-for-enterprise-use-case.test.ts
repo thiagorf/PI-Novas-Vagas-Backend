@@ -47,7 +47,7 @@ const prepareData = () => {
 describe("Get One Job For Enterprise", () => {
     it("Should be able to get one job for an enteprise", async () => {
         const { getOneJobForEnterprise, inMemoryEnterpriseRepository, inMemoryJobsRepository } = prepareUseCase();
-        const authenticatedId = 0;
+        const authenticatedId = 1;
 
         const { jobsBuilder, enterpriseData, enterpriseBuilder, applicants } = prepareData();
 
@@ -76,14 +76,14 @@ describe("Get One Job For Enterprise", () => {
                 enterprise_id: invalidEnterpriseId,
                 job_id: jobId,
             });
-        });
+        }).rejects.toThrowError("Invalid or inexisting enterprise");
     });
 
     it("Should not be able to get one job for an unauthorizated enterprise", async () => {
         const { getOneJobForEnterprise, inMemoryEnterpriseRepository } = prepareUseCase();
         const { enterpriseData } = prepareData();
 
-        const invalidAuthenticatedId = 1;
+        const invalidAuthenticatedId = 2;
         const randomJobId = 1;
 
         await inMemoryEnterpriseRepository.createAnEnterprise(enterpriseData);

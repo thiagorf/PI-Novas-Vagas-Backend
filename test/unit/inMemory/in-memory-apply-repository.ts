@@ -3,7 +3,7 @@ import { Apply } from "../../../src/modules/users/core/entity/Apply";
 import { ApplyRepository } from "../../../src/modules/users/infra/repositories/apply-repository";
 
 export class InMemoryApplyRepository implements ApplyRepository {
-    private id = 0;
+    private id = 1;
     private applies: Apply[] = [];
     private jobs: Jobs[] = [];
 

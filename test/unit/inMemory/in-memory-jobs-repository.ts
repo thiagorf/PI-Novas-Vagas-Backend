@@ -3,7 +3,7 @@ import { JobsRepository } from "../../../src/modules/jobs/infra/repositories/job
 import { JobsRequiredInfo, JobsRequiredUpdateInfo } from "../../../src/modules/jobs/types";
 
 export class InMemoryJobsRepository implements JobsRepository {
-    private id = 0;
+    private id = 1;
     private jobs: Jobs[] = [];
 
     async getAllJobs(): Promise<Jobs[]> {

@@ -44,7 +44,7 @@ describe("Give Up For A Job", () => {
         const sut = await giveUpForAJob.perform({ jobs_id: job.id, user_id: applicant.user_id });
 
         expect(sut).toHaveProperty("created_at");
-        expect(sut).toHaveProperty("id", 0);
+        expect(sut).toHaveProperty("id", 1);
     });
 
     it("Should not be able to give up with an invalid user", () => {
@@ -64,9 +64,6 @@ describe("Give Up For A Job", () => {
         const invalidJobId = 1;
 
         const applicant = await inMemoryApplicantRepository.createAnApplicant(applicantData);
-        const job = await inMemoryJobsRepository.createANewJob(jobsBuilder);
-
-        await inMemoryApplyRepository.apply(applicant.id, job.id);
 
         expect(async () => {
             await giveUpForAJob.perform({ jobs_id: invalidJobId, user_id: applicant.user_id });

@@ -4,7 +4,7 @@ import { EnterpriseRepository } from "../../../src/modules/users/infra/repositor
 import { EnterpriseInformation, JobsApplicants } from "../helpers/user-types";
 
 export class InMemoryEnterpriseRepository implements EnterpriseRepository {
-    private id = 0;
+    private id = 1;
     private enterprise: EnterpriseInformation[] = [];
     private jobs: EnterpriseJobs[] = [];
     private jobsWithApplicants: JobsApplicants;

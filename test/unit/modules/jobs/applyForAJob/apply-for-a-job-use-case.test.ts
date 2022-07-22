@@ -41,7 +41,7 @@ describe("Apply For A Job", () => {
         const sut = await applyForAJob.perform({ jobs_id: job.id, user_id: applicant.user_id });
 
         expect(sut).toHaveProperty("created_at");
-        expect(sut).toHaveProperty("id", 0);
+        expect(sut).toHaveProperty("id", 1);
     });
 
     it("Should not be able to apply to a job with an invalid applicant", () => {

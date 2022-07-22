@@ -5,7 +5,7 @@ import { ApplicantRepository } from "../../../src/modules/users/infra/repositori
 import { ApplicantInformation } from "../helpers/user-types";
 
 export class InMemoryApplicantRepository implements ApplicantRepository {
-    private id = 0;
+    private id = 1;
     private applicants: ApplicantInformation[] = [];
     private jobs: ApplicantJobs[] = [];
 

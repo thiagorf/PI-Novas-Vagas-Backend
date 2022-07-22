@@ -5,7 +5,7 @@ import { UsersBuilder } from "./users-builder";
 export class ApplicantBuilder {
     private user: Users = UsersBuilder.aUser().build();
     private applicant: Applicants = {
-        id: 0,
+        id: 1,
         curriculum: "curriculum url",
         photo: "photo url",
         user_id: this.user.id,
