@@ -3,32 +3,34 @@ import { AuthTokenService } from "../../../../infra/service/tokenAuth/auth-token
 
 export class CheckJwtUseCase {
     constructor(private authService: AuthTokenService, private userRepository: UserRepository) {}
-    async perform(token: string) {
-        try {
-            if (!token) {
-                throw new Error("Invalid token");
-            }
 
+    private failRequest = {
+        ok: false,
+    };
+
+    async perform(token: string) {
+        if (!token) {
+            return this.failRequest;
+        }
+
+        try {
             const decoded = this.authService.decode(token);
 
-            if (!decoded) {
-                throw new Error("Invalid Token");
+            if (decoded instanceof Error) {
+                return this.failRequest;
             }
 
             const userExists = await this.userRepository.getUserById(decoded.sub);
 
             if (!userExists) {
-                throw new Error("Invalid Token!");
+                return this.failRequest;
             }
 
             return {
                 ok: true,
             };
         } catch (error) {
-            //padronizar response de autenticação
-            return {
-                ok: false,
-            };
+            return this.failRequest;
         }
     }
 }

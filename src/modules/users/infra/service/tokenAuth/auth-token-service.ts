@@ -4,5 +4,5 @@ export interface TokenPayload {
 
 export interface AuthTokenService {
     encode(payload: TokenPayload): string;
-    decode(token: string): TokenPayload;
+    decode(token: string): TokenPayload | Error;
 }
